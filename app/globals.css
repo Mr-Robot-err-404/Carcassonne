@@ -2,6 +2,52 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Hide scrollbar for Chrome, Safari and Opera */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.hide-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.grid-dimensions {
+  width: 4000px;
+  height: 2000px;
+}
+
+.bg-img {
+  background-image: url("/wood-textures/simon-berger-JH_R66BihvA-unsplash.jpg");
+}
+
+.center-arrow {
+  left: 20%
+}
+
+.pr-option {
+  padding-right: 7px;
+}
+
+.px-sm {
+  padding-left: 1px;
+  padding-right: 1px;
+}
+
+.py-sm {
+  padding-top: 1px;
+  padding-bottom: 1px;
+}
+
+.popover-y-container {
+  --tw-translate-y: -100px
+}
+
+.popover-y-arrow {
+  --tw-translate-y: -8px
+}
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
