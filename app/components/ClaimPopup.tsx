@@ -3,8 +3,9 @@ import ClaimOption from './ClaimOption'
 import { useContext, useState } from 'react'
 import GridContext from '../context/GridContext'
 import { capitalizeFirstLetter, dirMap } from '@/lib/helperFunctions'
-import { claimCity, claimMonastery, claimRoad } from '@/lib/inGameFunctions'
-import { Tile } from '@/lib/interfaces'
+import { claimCity } from '@/lib/main/claimCity'
+import { claimRoad } from '@/lib/main/claimRoads'
+import { claimMonastery } from '@/lib/main/claimMonastery'
 
 interface Props {
     toggle: boolean,
@@ -21,21 +22,21 @@ export default function ClaimPopup({ toggle, setToggle, row, col }: Props) {
     const arr: string[] = Object.keys(claims)
 
     function handleClaim() {
-        setToggle(false)
         const territory = playerTurn ? playerTerritory : opponentTerritory
+        setToggle(false)
 
         if (selected === "Road") {
-            const [chain, matrix] = claimRoad(board, recentTile, "road", row, col, territory, dir)
-            appendChain(chain, matrix)
+            const [chain, matrix] = claimRoad(board, recentTile, row, col, territory, dir)
+            appendChain(chain, matrix, "road")
         }
         else if (selected === "City") {
-            const [chain, matrix] = claimCity(board, recentTile, row, col, playerTerritory, dir)
-            setPlayerTerritory(matrix)
+            const [chain, matrix] = claimCity(board, recentTile, row, col, territory, dir)
+
+            appendChain(chain, matrix, "city")
         }
         else if (selected === "Monastery") {
-            const chain = claimMonastery(board, recentTile, row, col, territory)
+            const chain = claimMonastery(board, recentTile, row, col, playerTerritory)
         }
-        
     }
    
     return (
@@ -44,19 +45,19 @@ export default function ClaimPopup({ toggle, setToggle, row, col }: Props) {
                 <div className="flex flex-col space-y-1 py-2">
                     {arr.map((key: string) => {
                         if (key === "edgeIndices") {
-                            return <></>
+                            return <div key={"Hello there!"}></div>
                         }
                         const int = claims[key]
                         const str = capitalizeFirstLetter(key)
 
                         if (int === 0) {
                             return (
-                                <div className='flex justify-center'>
+                                <div key={"nope"} className='flex justify-center'>
                                     <h2 className='text-md text-slate-300'>{ key } - nope</h2>
                                 </div>
                             )
                         }
-                        if (int > 1) {
+                        if (claims.edgeIndices.length) {
                             const map = dirMap(recentTile, key)
                             return (
                                 <div key={`${key}-0`} className='flex justify-between px-2'>

@@ -42,7 +42,8 @@ export const riverTiles = [
         rotate: 0, 
         type: "river",
         monastery: true,
-        id: 7
+        id: 7, 
+        deadEnd: true
     }, 
     {
         img: "/riverTiles/Adobe Scan 12 Sept 2023 (71)-1.png", 

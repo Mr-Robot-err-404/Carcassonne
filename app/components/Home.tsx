@@ -8,8 +8,11 @@ import { distanceToCenter, findCenter, initValidTiles } from "@/lib/gridSetup"
 import TilePlaceholder from "./TilePlaceholder"
 import { parseKey } from "@/lib/helperFunctions"
 import GridContext from "../context/GridContext"
-import { appendClaims, filterClaims, isMoveLegal, possibleClaims } from "@/lib/inGameFunctions"
-import { Claim, Land, Tile } from "@/lib/interfaces"
+import { possibleClaims } from "@/lib/claims/possibleClaims"
+import { Chain, Claim, Land, Territory, Tile } from "@/lib/interfaces"
+import { appendClaims } from "@/lib/main/append"
+import { filterClaims } from "@/lib/main/filter"
+import { isMoveLegal } from "@/lib/main/legal"
 
 export default function Home({ preset }: any) {
   const { setBoard, setValidTiles, setCurrTile, stack } = useContext(GridContext)
@@ -57,18 +60,25 @@ function handleDragEnd(e: any) {
   const board: Tile[][] = active.data.current.board
 
   if (isMoveLegal(board, node, row, col)) {
+    node.row = row, node.col = col
     const playerTerritory: Land[][] = active.data.current.playerTerritory
-    const playerChains: Tile[][] = active.data.current.playerChains
+    const playerChains: Chain[] = active.data.current.playerChains
     const opponentTerritory: Land[][] = active.data.current.opponentTerritory
-    const opponentChains: Tile[][] = active.data.current.opponentChains
+    const opponentChains: Chain[] = active.data.current.opponentChains
+
     const claims: Claim = possibleClaims(node)
-    const [currClaims, filteredClaims] = filterClaims(claims, node, playerTerritory, row, col)
-
-    appendClaims(board, filteredClaims, node, playerTerritory, playerChains, opponentTerritory, opponentChains, row, col)
-
+    const [currClaims, filteredClaims] = filterClaims(board, claims, node, playerTerritory, opponentTerritory, row, col)
+    
+    const [map, scores] = appendClaims(board, filteredClaims, node, playerTerritory, playerChains, opponentTerritory, opponentChains, row, col)
+    
     const updateCell = active.data.current.updateCell
     const setRecentTile = active.data.current.setRecentTile
+    const updateTerritory = active.data.current.updateTerritory
+    const updateScore = active.data.current.updateScore
+
     updateCell(row, col, node, currClaims)
+    updateTerritory(map.player.territory, map.ai.territory, map.player.chains, map.ai.chains)
+    updateScore(scores.player, scores.ai)
     setRecentTile(node)
   }
 }

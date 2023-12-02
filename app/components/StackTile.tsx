@@ -6,7 +6,7 @@ import { CSS } from '@dnd-kit/utilities';
 import GridContext from "../context/GridContext"
 
 export default function StackTile() {
-    const { currTile, updateCell, board, setRecentTile, playerTerritory, playerChains } = useContext(GridContext)
+    const { currTile, updateCell, board, updateTerritory, setRecentTile, playerTerritory, playerChains, opponentTerritory, opponentChains, updateScore } = useContext(GridContext)
     const { attributes, listeners, setNodeRef, transform } = useDraggable({
         id: 'stack-tile',
         data: {
@@ -15,7 +15,11 @@ export default function StackTile() {
             board: board, 
             setRecentTile: setRecentTile, 
             playerTerritory: playerTerritory, 
-            playerChains: playerChains
+            playerChains: playerChains, 
+            opponentTerritory: opponentTerritory, 
+            opponentChains: opponentChains, 
+            updateTerritory: updateTerritory, 
+            updateScore: updateScore
         }
     })
     

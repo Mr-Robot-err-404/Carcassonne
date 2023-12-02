@@ -1,4 +1,6 @@
-import { Claim, Land, Tile } from "./interfaces"
+import { isTerritoryClaimed } from "./claims/isTerritoryClaimed"
+import { Chain, Curr, Land, Neighbor, ChainNode, Tile } from "./interfaces"
+import { emptyTile } from "./nodes"
 
 export function randomIndex(len: number): number {
     const idx = Math.floor(Math.random() * len)
@@ -17,6 +19,29 @@ export function capitalizeFirstLetter(str: string) {
     return val + str.slice(1)
 }
 
+export function findOtherValue(arr: string[], str: string) {
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i] === str) {
+            continue
+        }
+        return [arr[i], i]
+    }
+    return []
+}
+
+export function findKey(arr: Neighbor[]) {
+    const strs = []
+    for (let i = 0; i < arr.length; i++) {
+        strs.push(arr[i].str)
+    }
+
+    let str = "player"
+    if (!strs.includes("player") && !strs.includes("overlap")) {
+        str = "ai"
+    }
+    return str 
+}
+
 export function removeIdx(arr: number[], int: number) {
     for (let i = 0; i < arr.length; i++) {
         if (arr[i] === int) {
@@ -26,125 +51,139 @@ export function removeIdx(arr: number[], int: number) {
     }
 } 
 
+export function filterThreeWalls(arr: ChainNode[]) {
+    const res: ChainNode[] = []
+    for (let i = 0; i < arr.length; i++) {
+        const curr = arr[i]
+        const edges = curr.node.edges
+        let count = 0
+
+        edges.forEach((edge: string) => {
+            if (edge === "city") {
+                count++
+            }
+        })
+
+        if (count === 3) {
+            res.push(curr)
+        }
+    }
+    return res 
+}
+
+export function selectCities(arr: Tile[]) {
+    const res: Tile[] = []
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i].edges.includes("city") && !arr[i].edges.includes("road")) {
+            if (selectWalls(arr[i].edges, 2)) {
+                res.push(arr[i])
+            }
+        }
+    }
+    return res 
+}
+
+function selectWalls(edges: string[], target: number) {
+    let int = 0
+    for (let i = 0; i < edges.length; i++) {
+        if (edges[i] === "city") {
+            int++
+        }
+    }
+    return int === target
+}
+
 export function selectRoads(arr: Tile[]) {
     const res: Tile[] = []
     for (let i = 0; i < arr.length; i++) {
-        if (arr[i].edges.includes("road") && !arr[i].edges.includes("city")) {
+        if (arr[i].edges.includes("road") && !arr[i].monastery) {
+            if (isRoadStraight(arr[i].edges)) {
+                continue
+            }
             res.push(arr[i])
         }
     }
     return res
 }
 
-export function filterCities(claims: Claim, filteredClaims: Claim, node: Tile, row: number, col: number, edges: string[], dir: number[][], territory: Land[][], joinMap: Map<number, number>) {
-    if (!claims.city) {
-        return 
-    }
+function isRoadStraight(edges: string[]) {
+    const joinMap = oppositeEdges()
+    const arr = []
     for (let i = 0; i < edges.length; i++) {
-        if (edges[i] !== "city") {
-            continue
+        if (edges[i] === "road") {
+            arr.push(i)
         }
-        const x = dir[i][1]
-        const y = dir[i][0]
-        const neighbor = territory[row + y][col + x]
-
-        if (neighbor.node.empty) {
-            continue
-        }
-
-        if (!neighbor.claims.includes("city")) {
-            continue
-        }
-
-        if (neighbor.node.unjoined) {
-            if (!neighbor.edgeIndices.length) {
-                continue
-            }
-            const idx = joinMap.get(i) as number
-            if (!neighbor.edgeIndices.includes(idx)) {
-                continue
-            }
-        }
-        const int = claims.city as number
-        const val = filteredClaims.city as number
-        claims.city = int - 1
-        filteredClaims.city = val + 1
-
-        if (node.unjoined) {
-            removeIdx(claims.edgeIndices as number[], i)
-            filteredClaims.edgeIndices?.push(i)
-        }
-        else break
     }
-    
+    const int = joinMap.get(arr[0])
+    return int === arr[1]
 }
 
-export function filterRoads(claims: Claim, filteredClaims: Claim, node: Tile, row: number, col: number, edges: string[], dir: number[][], territory: Land[][], joinMap: Map<number, number>) {
-    if (!claims.road) {
-        return 
+export function isOverlap(arr: Neighbor[]): boolean {
+    for (let i = 0; i < arr.length; i++) {
+        const str = arr[i].str
+        if (str === "overlap") {
+            return true 
+        }
     }
-    for (let i = 0; i < edges.length; i++) {
-        if (edges[i] !== "road") {
-            continue
-        }
-        const x = dir[i][1]
-        const y = dir[i][0]
-        const neighbor = territory[row + y][col + x]
-
-        if (neighbor.node.empty) {
-            continue
-        }
-
-        if (!neighbor.claims.includes("road")) {
-            continue
-        }
-        if (neighbor.node.village) {
-            if (!neighbor.edgeIndices.length) {
-                continue
-            }
-            const idx = joinMap.get(i) as number
-            if (!neighbor.edgeIndices.includes(idx)) {
-                continue
-            }
-        }
-        const int = claims.road as number
-        const val = filteredClaims.road as number
-        claims.road = int - 1 
-        filteredClaims.road = val + 1
-       
-
-        if (node.village) {
-            removeIdx(claims.edgeIndices as number[], i)
-            filteredClaims.edgeIndices?.push(i)
-        }
-        else break
-    }
+    return false 
 }
 
-export function findChain(chains: Tile[][], node: Tile): number[] {
+export function neighborNodes(board: Tile[][], playerTerritory: Land[][], aiTerritory: Land[][], arr: Curr[], claim: string): string[] {
+    const strs: string[] = []
+    for (let i = 0; i < arr.length; i++) {
+        const curr = arr[i]
+        if (isTerritoryClaimed(playerTerritory, curr.node, curr.row, curr.col, curr.idx, claim)) {
+            if (isTerritoryClaimed(aiTerritory, curr.node, curr.row, curr.col, curr.idx, claim)) {
+                strs.push("overlap")
+            }
+            else strs.push("player")  
+        }
+
+        else if (isTerritoryClaimed(aiTerritory, curr.node, curr.row, curr.col, curr.idx, claim)) {
+            strs.push("ai")
+        }
+            
+        else if (board[curr.row][curr.col].empty) {
+            strs.push("empty")
+        }
+        else strs.push("unclaimed")
+    }
+    return strs
+}
+
+export function findNodeStr(nodes: string[], targets: string[]): string {
+    for (let i = 0; i < nodes.length; i++) {
+        const str = nodes[i]
+        if (targets.includes(str)) {
+            return str
+        }
+    }
+    return ""
+}
+
+export function findNeighbor(neighbors: Curr[], idx: number) {
+    for (let i = 0; i < neighbors.length; i++) {
+        const curr = neighbors[i]
+        if (curr.idx === idx) {
+            return curr
+        }
+    }
+    return neighbors[0]
+}
+
+export function findChain(chains: Chain[], node: Tile, claim: string): number[] {
     for (let i = 0; i < chains.length; i++) {
-        for (let j = 0; j < chains[i].length; j++) {
-            if (chains[i][j] === node) {
+        if (chains[i].claim !== claim) {
+            continue
+        }
+        const chain = chains[i].chain
+        for (let j = 0; j < chain.length; j++) {
+            if (chain[j].node === node) {
                 return [i, j]
             }
         } 
     }
     return [-1, -1]
-}
-
-export function isTerritoryClaimed(matrix: Land[][], node: Tile, row: number, col: number, idx: number, claim: string,): boolean {
-    if (matrix[row][col].node !== node) {
-        return false
-    }
-    if (!matrix[row][col].claims.includes(claim)) {
-        return false 
-    }
-    if (matrix[row][col].node.village) {
-        if (!matrix[row][col].edgeIndices.includes(idx)) {
-            return false
-        }
-    }
-    return true
 }
 
 export function appendLand(matrix: Land[][], row: number, col: number, node: Tile, claim: string, idx?: number) {
@@ -160,22 +199,9 @@ export function appendLand(matrix: Land[][], row: number, col: number, node: Til
     }
 }
 
-export function joinChains(chain1: Tile[], chain2: Tile[], node1: Tile, node2: Tile, joinNode: Tile): Tile[] {
-    const mergedChain: Tile[] = []
-    const end = chain1.length - 1
-
-    if (chain1[end] !== node1) {
-        chain1.reverse()
-    }
-    if (chain2[0] !== node2) {
-        chain2.reverse()
-    }
-
-    chain1.push(joinNode)
-    chain1.forEach((node: Tile) => mergedChain.push(node))
-    chain2.forEach((node: Tile) => mergedChain.push(node))
-
-    return mergedChain
+export function isLoop(arr: ChainNode[]): boolean {
+    const end = arr.length - 1
+    return arr[0].node === arr[end].node && arr.length > 1
 }
 
 export function dirMap(node: Tile, key: string, singleEdge?: string) {
@@ -204,7 +230,6 @@ export function dirMap(node: Tile, key: string, singleEdge?: string) {
             }
         })  
     } 
-    
     return map
 }
 
@@ -289,11 +314,6 @@ export function findOtherEdges(edges: string[], currEdgeIdx: number, claim: stri
         }
     }
     return indices
-}
-
-export function isLoop(arr: Tile[]) {
-    const end = arr.length - 1
-    return arr[0] === arr[end] && arr.length > 1
 }
 
 export function filterEdges(edges: string[], key: string) {

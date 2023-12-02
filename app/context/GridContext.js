@@ -2,7 +2,7 @@ import { riverTiles, tiles, emptyTile } from "@/lib/nodes";
 import { createEmptyBoard, createEmptyMatrix, createEmptyTerritory, shuffleStack } from "@/lib/gridSetup";
 import { createContext, useState } from "react";
 import { randomizeRiver, updateValidTiles } from "@/lib/inGameFunctions"
-import { selectRoads } from "@/lib/helperFunctions";
+import { selectCities, selectRoads } from "@/lib/helperFunctions";
 
 const GridContext = createContext()
 
@@ -20,11 +20,17 @@ export function GridProvider({ children }) {
     const [claims, setClaims] = useState(new Map())
 
     const [playerTurn, setPlayerTurn] = useState(true)
+    const [isMoveFinished, setIsMoveFinished] = useState(false)
     const [playerTerritory, setPlayerTerritory] = useState(emptyTerritory)
-    const [opponentTerritory, setOpponentTerritory] = useState([...emptyTerritory])
+    const [opponentTerritory, setOpponentTerritory] = useState(createEmptyTerritory())
 
     const [playerChains, setPlayerChains] = useState([])
     const [opponentChains, setOpponentChains] = useState([])
+
+    const [score, setScore] = useState({
+        player: 0, 
+        ai: 0
+    })
 
     const updateCell = (row, col, node, currClaims) => {
         const matrix = updateValidTiles(board, validTiles, row, col)
@@ -33,19 +39,41 @@ export function GridProvider({ children }) {
         setBoard(newBoard)
         setValidTiles(matrix)
         setClaims(currClaims)
-        setPlayerTurn(!playerTurn)
+        setIsMoveFinished(true)
         updateStack()
     }
 
-    const appendChain = (chain, matrix) => {
+    const appendChain = (chain, matrix, claim) => {
         if (playerTurn) {
-            setPlayerChains((prev) => [...prev, chain])
+            setPlayerChains((prev) => [...prev, {
+                chain: chain, 
+                meeples: 1, 
+                claim: claim
+            }])
             setPlayerTerritory(matrix)
         }
         else {
-            setOpponentChains((prev) => [...prev, chain])
+            setOpponentChains((prev) => [...prev, {
+                chain: chain, 
+                meeples: 1, 
+                claim: claim
+            }])
             setOpponentTerritory(matrix)
         }
+    }
+
+    function updateTerritory(playerMatrix, aiMatrix, playerChains, aiChains) {
+        setPlayerTerritory(playerMatrix)
+        setOpponentTerritory(aiMatrix)
+        setPlayerChains(playerChains)
+        setOpponentChains(aiChains)
+    } 
+
+    function updateScore(playerScore, aiScore) {
+        setScore(prev => ({
+            player: prev.player + playerScore, 
+            ai: prev.ai + aiScore
+        }))
     }
 
     const updateStack = () => {
@@ -73,7 +101,7 @@ export function GridProvider({ children }) {
     }
 
     return (
-        <GridContext.Provider value={{ board, setBoard, updateCell, stack, rotateCurrTile, currTile, validTiles, setValidTiles, setCurrTile, playerTurn, recentTile, setRecentTile, claims, playerTerritory, setPlayerTerritory, appendChain, playerChains }}>
+        <GridContext.Provider value={{ board, setBoard, updateTerritory, updateCell, stack, rotateCurrTile, currTile, validTiles, setValidTiles, setCurrTile, playerTurn, setPlayerTurn, recentTile, setRecentTile, claims, playerTerritory, setPlayerTerritory, opponentTerritory, appendChain, playerChains, opponentChains, isMoveFinished, setIsMoveFinished, score, updateScore }}>
             {children}
         </GridContext.Provider>
     )
