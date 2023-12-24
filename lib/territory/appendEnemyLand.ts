@@ -4,6 +4,7 @@ import { Land, PlayerChain } from "../interfaces";
 export function appendEnemyLand(currChain: PlayerChain[], matrix: Land[][], claim: string) {
     for (let i = 0; i < currChain.length; i++) {
         const curr = currChain[i]
+
         if (curr.overlap) {
             continue
         }
@@ -14,7 +15,7 @@ export function appendEnemyLand(currChain: PlayerChain[], matrix: Land[][], clai
             const idx = chain[j].edgeIdx
             const row = node.row as number
             const col = node.col as number
-            appendLand(matrix, row, col, curr.node, claim, idx)
+            appendLand(matrix, row, col, node, claim, idx)
         }
     }
 }

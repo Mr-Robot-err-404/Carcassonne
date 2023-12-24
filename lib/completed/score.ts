@@ -12,7 +12,7 @@ export function scorePoints(completed: Completed, map: Territory) {
     }
     const arr = completed.player
     const arr2 = completed.ai
-    
+
     for (let i = 0; i < arr.length; i++) {
         const curr = arr[i]
         const idx = curr.idx

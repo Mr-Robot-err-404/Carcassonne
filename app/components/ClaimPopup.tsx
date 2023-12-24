@@ -2,41 +2,47 @@
 import ClaimOption from './ClaimOption'
 import { useContext, useState } from 'react'
 import GridContext from '../context/GridContext'
-import { capitalizeFirstLetter, dirMap } from '@/lib/helperFunctions'
-import { claimCity } from '@/lib/main/claimCity'
-import { claimRoad } from '@/lib/main/claimRoads'
-import { claimMonastery } from '@/lib/main/claimMonastery'
+import { capitalizeFirstLetter, dirIdxMap, dirMap } from '@/lib/helperFunctions'
+import { copy } from '@/lib/ai/copy'
+import { claimFunction } from '@/lib/territory/claimMap'
 
 interface Props {
     toggle: boolean,
     setToggle: any,
+    isNodeClaimed: boolean, 
+    setIsNodeClaimed: any
     row: number,
     col: number
 }
 
-export default function ClaimPopup({ toggle, setToggle, row, col }: Props) {
+export default function ClaimPopup({ toggle, setToggle, isNodeClaimed, setIsNodeClaimed, row, col }: Props) {
     const [selected, setSelected] = useState<string>("")
     const [dir, setDir] = useState<string>("")
-    const { claims, recentTile, board, playerTerritory, setPlayerTerritory, opponentTerritory, setOpponentTerritory, appendChain, playerTurn } = useContext(GridContext)
+    const { claims, recentTile, board, playerTerritory, opponentTerritory, appendChain, playerTurn } = useContext(GridContext)
 
     const arr: string[] = Object.keys(claims)
 
     function handleClaim() {
-        const territory = playerTurn ? playerTerritory : opponentTerritory
         setToggle(false)
 
-        if (selected === "Road") {
-            const [chain, matrix] = claimRoad(board, recentTile, row, col, territory, dir)
-            appendChain(chain, matrix, "road")
+        if (isNodeClaimed) {
+            return 
         }
-        else if (selected === "City") {
-            const [chain, matrix] = claimCity(board, recentTile, row, col, territory, dir)
 
-            appendChain(chain, matrix, "city")
+        const territory = playerTurn ? playerTerritory : opponentTerritory
+        const str: string = copy(selected).toLowerCase()
+
+        if (!str.length) {
+            return 
         }
-        else if (selected === "Monastery") {
-            const chain = claimMonastery(board, recentTile, row, col, playerTerritory)
-        }
+
+        const idx = dirIdxMap[dir] 
+
+        const createClaim = claimFunction[str]
+        const [chain, matrix] = createClaim(board, recentTile, row, col, territory, idx)
+
+        appendChain(chain, matrix, str)
+        setIsNodeClaimed(true)
     }
    
     return (
@@ -53,11 +59,11 @@ export default function ClaimPopup({ toggle, setToggle, row, col }: Props) {
                         if (int === 0) {
                             return (
                                 <div key={"nope"} className='flex justify-center'>
-                                    <h2 className='text-md text-slate-300'>{ key } - nope</h2>
+                                    
                                 </div>
                             )
                         }
-                        if (claims.edgeIndices.length) {
+                        if ((key === "road" && recentTile.village) || (key === "city" && recentTile.unjoined)) {
                             const map = dirMap(recentTile, key)
                             return (
                                 <div key={`${key}-0`} className='flex justify-between px-2'>

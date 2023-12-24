@@ -41,17 +41,38 @@ export function updateValidTiles(board: Tile[][], validTiles: Boolean[][], row: 
     return matrix 
 }
 
+export const initOverview = {
+    player: {
+        finalScore: 0, 
+        cities: 0, 
+        roads: 0, 
+        monasteries: 0, 
+        stolenCities: 0, 
+        stolenRoads: 0, 
+        maxCity: 0, 
+        maxRoad: 0
+    },
+    ai: {
+        finalScore: 0, 
+        cities: 0, 
+        roads: 0, 
+        monasteries: 0, 
+        stolenCities: 0, 
+        stolenRoads: 0, 
+        maxCity: 0, 
+        maxRoad: 0
+    },
+}
+
 export function outerSquare(arr: Boolean[][]) {
     const matrix = [...arr]
     for (let i = 0; i < matrix.length; i++) {
         for (let j = 0; j < matrix[0].length; j++) {
-            if (j == 22 || j == 28) {
-                if(i >= 13 && i <= 17) matrix[i][j] = true
+            if (j >= 21 && j <= 29) {
+                if (i >= 12 && i <= 18) {
+                    matrix[i][j] = true
+                }
             }
-            if (i == 13 || i == 17) {
-                if(j >= 22 && j <= 28) matrix[i][j] = true
-            }
-
         }
     }
     return matrix 

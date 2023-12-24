@@ -3,10 +3,11 @@ import { isCityComplete } from "./city";
 import { isMonasteryComplete } from "./monastery";
 import { isRoadComplete } from "./road";
 import { threeWalls } from "./threeWalls";
+import { emptyWalls } from "./walls";
 
 export function completedChains(map: any, dir: number[][]) {
     const strs = ["player", "ai"]
-    const completed: any = {
+    const completed: Completed = {
         player: [], 
         ai: []
     }
@@ -21,7 +22,7 @@ export function completedChains(map: any, dir: number[][]) {
             const chain = curr.chain
 
             if (curr.claim === "city") {
-                if (isCityComplete(chain) && threeWalls(chain, map[str].territory, dir)) {
+                if (isCityComplete(chain) && emptyWalls(chain, map[str].territory, dir)) {
                     completed[str].push({
                         idx: j, 
                         claim: "city"
@@ -30,7 +31,7 @@ export function completedChains(map: any, dir: number[][]) {
             }
 
             else if (curr.claim === "road") {
-                if (isRoadComplete(chain, map[str].territory)) {
+                if (isRoadComplete(chain, map[str].territory, dir)) {
                     completed[str].push({
                         idx: j, 
                         claim: "road"

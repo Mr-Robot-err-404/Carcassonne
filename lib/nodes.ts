@@ -319,14 +319,16 @@ export const tiles = [
         edges: ["field", "field", "road", "field"], 
         rotate: 0, 
         id: 46, 
-        monastery: true
+        monastery: true, 
+        deadEnd: true
     },
     {
         img: "/monastery/Adobe Scan 12 Sept 2023 (53)-1.png", 
         edges: ["field", "field", "road", "field"], 
         rotate: 0, 
         id: 47, 
-        monastery: true
+        monastery: true, 
+        deadEnd: true
     },
     {
         img: "/roads/Adobe Scan 12 Sept 2023 (17)-1.png", 

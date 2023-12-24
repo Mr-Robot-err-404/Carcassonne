@@ -1,6 +1,7 @@
 import { isTerritoryClaimed } from "../claims/isTerritoryClaimed";
-import { findChain } from "../helperFunctions";
-import { Tile, Territory } from "../interfaces";
+import { Tile, Territory, Claim } from "../interfaces";
+import { findChain } from "../chains/findChain";
+import { appendLand } from "../helperFunctions";
 
 export function appendMonasteries(board: Tile[][], map: Territory, row: number, col: number) {
     //Not all dragons breathe fire...
@@ -20,7 +21,19 @@ export function appendMonasteries(board: Tile[][], map: Territory, row: number, 
         const x = dir[i][0]
         const y = dir[i][1]
         const neighbor = board[row + y][col + x]
-        
+
+        if (neighbor.empty) {
+            continue
+        }
+
+        if (!neighbor.monastery) {
+            continue
+        }
+
+        if (!neighbor.claimed) {
+            continue
+        }
+
         if (isTerritoryClaimed(map.player.territory, neighbor, row + y, col + x, -1, "monastery")) {
             const [chainIdx] = findChain(map.player.chains, neighbor, "monastery")
             map.player.chains[chainIdx].chain.push({ node: neighbor })
@@ -28,7 +41,7 @@ export function appendMonasteries(board: Tile[][], map: Territory, row: number, 
 
         else if (isTerritoryClaimed(map.ai.territory, neighbor, row + y, col + x, -1, "monastery")) {
             const [chainIdx] = findChain(map.ai.chains, neighbor, "monastery")
-            map.ai.chains[chainIdx].chain.push({node: neighbor})
+            map.ai.chains[chainIdx].chain.push({ node: neighbor })
         }
     }
 }

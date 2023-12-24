@@ -1,5 +1,6 @@
 import { Claim, Tile, Land, Chain, Territory, ChainNode } from "./interfaces"
-import { findChain, removeIdx } from "./helperFunctions"
+import { removeIdx } from "./helperFunctions"
+import { findChain } from "./chains/findChain"
 
 export function filterCities(board: Tile[][], claims: Claim, filteredClaims: Claim, territories: Land[][][], node: Tile, row: number, col: number, edges: string[], dir: number[][], territory: Land[][], joinMap: Map<number, number>) {
     if (!claims.city) {
@@ -102,8 +103,8 @@ export function joinChains(chain1: ChainNode[], chain2: ChainNode[], node1: Tile
     }
 
     chain1.push({node: joinNode})
-    chain1.forEach((curr: ChainNode) => mergedChain.push({node: curr.node}))
-    chain2.forEach((curr: ChainNode) => mergedChain.push({node: curr.node}))
+    chain1.forEach((curr: ChainNode) => mergedChain.push(curr))
+    chain2.forEach((curr: ChainNode) => mergedChain.push(curr))
 
     return mergedChain
 }

@@ -5,6 +5,8 @@ export function filterCities(board: Tile[][], claims: Claim, filteredClaims: Cla
     if (!claims.city) {
         return 
     }
+    const set = new Set()
+
     for (let i = 0; i < edges.length; i++) {
         if (edges[i] !== "city") {
             continue
@@ -32,12 +34,17 @@ export function filterCities(board: Tile[][], claims: Claim, filteredClaims: Cla
                     continue
                 }
             }
+            if (node.unjoined && set.has(i)) {
+                continue
+            }
+
             const int = claims.city as number
             const val = filteredClaims.city as number
             claims.city = int - 1
             filteredClaims.city = val + 1
     
             if (node.unjoined) {
+                set.add(i)
                 removeIdx(claims.edgeIndices as number[], i)
                 filteredClaims.edgeIndices?.push(i)
             }

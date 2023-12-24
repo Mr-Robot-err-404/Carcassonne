@@ -12,27 +12,22 @@ export function possibleClaims(node: Tile) {
         }
         if (!claims[str]) {
             claims[str] = 1
+            continue
         }
-        else {
-            let int = claims[str]
-            claims[str] = int + 1
-        }
+        const int = claims[str]
+        claims[str] = int + 1
     }
 
     if (node.monastery) {
         claims.monastery = 1
     }
 
-    if (claims.city) {
-        if (!node.unjoined) {
-            claims.city = 1
-        }
+    if (claims.city && !node.unjoined) {
+        claims.city = 1
     }
 
-    if (claims.road) {
-        if (!node.village) {
-            claims.road = 1
-        }
+    if (claims.road && !node.village) {
+        claims.road = 1
     }
     claims.edgeIndices = edgeIdxArr(claims, node)
     return claims

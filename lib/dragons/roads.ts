@@ -1,10 +1,11 @@
 import { Tile, Claim, Chain, Curr, ChainNode } from "../interfaces"
-import { neighborNodes, findChain, appendLand, findNodeStr, findOtherValue } from "../helperFunctions"
+import { neighborNodes, appendLand, findNodeStr, findOtherValue } from "../helperFunctions"
 import { joinChains } from "../claimFunctions"
 import { createEmptyMatrix } from "../gridSetup"
 import { walkRoad } from "../walk/walkRoad"
 import { visitNodes } from "../chains/visitNodes"
 import { appendVillage } from "./village"
+import { findChain } from "../chains/findChain"
 
 
 export function appendRoads(board: Tile[][], map: any, claims: Claim, roadEdges: number[], node: Tile, row: number, col: number, dir: number[][], joinMap: Map<number, number>) {
@@ -13,12 +14,12 @@ export function appendRoads(board: Tile[][], map: any, claims: Claim, roadEdges:
     if (!claims.road) {
         return 
     }
-    if (node.village) {
+    if (node.village || node.monastery || node.deadEnd) {
         appendVillage(board, map, claims, node, dir, joinMap, row, col)
         return 
     } 
     const neighbors: Curr[] = []
-
+    
     for (let i = 0; i < roadEdges.length; i++) {
         const idx = roadEdges[i]
         const x = dir[idx][1]
@@ -49,7 +50,7 @@ export function appendRoads(board: Tile[][], map: any, claims: Claim, roadEdges:
         const chains: Chain[] = map[str].chains
         const neighbor = neighbors.pop() as { node: Tile, idx: number, row: number, col: number }
         
-        const [chainIdx, idx] = findChain(chains, neighbor.node, "road")  
+        const [chainIdx, idx] = findChain(chains, neighbor.node, "road", neighbor.idx)  
         const chain = chains[chainIdx].chain
         
         if (idx === 0) {
@@ -63,7 +64,7 @@ export function appendRoads(board: Tile[][], map: any, claims: Claim, roadEdges:
         if (nodes.includes("overlap")) {
             appendLand(map.player.territory, row, col, node, "road")
             appendLand(map.ai.territory, row, col, node, "road")
-            const [currIdx] = findChain(map.ai.chains, neighbor.node, "road")
+            const [currIdx] = findChain(map.ai.chains, neighbor.node, "road", neighbor.idx)
             
             map.player.chains = chains
             map.ai.chains[currIdx].chain = chain
@@ -89,8 +90,8 @@ export function appendRoads(board: Tile[][], map: any, claims: Claim, roadEdges:
         //This is where the fun begins...
 
         const chains: Chain[] = map[str].chains
-        const [chainIdx1] = findChain(chains, curr1.node, "road")
-        const [chainIdx2] = findChain(chains, curr2.node, "road")
+        const [chainIdx1] = findChain(chains, curr1.node, "road", curr1.idx)
+        const [chainIdx2] = findChain(chains, curr2.node, "road", curr2.idx)
         const chain1 = chains[chainIdx1].chain
         const chain2 = chains[chainIdx2].chain
         
@@ -118,15 +119,15 @@ export function appendRoads(board: Tile[][], map: any, claims: Claim, roadEdges:
         map[str].chains = chains
 
         if (nodes.includes("overlap")) {
-            const [idx1] = findChain(map.ai.chains, curr1.node, "road")
-            const [idx2] = findChain(map.ai.chains, curr2.node, "road")
+            const [idx1] = findChain(map.ai.chains, curr1.node, "road", curr1.idx)
+            const [idx2] = findChain(map.ai.chains, curr2.node, "road", curr2.idx)
             const currChains: Chain[] = map.ai.chains
             let int: number = currChains[idx1].meeples + currChains[idx2].meeples
 
             if (idx1 === idx2) {
-                int = currChains[idx1].meeples
                 mergedChain = currChains[idx1].chain
                 mergedChain.push({ node: node })
+                int = currChains[idx1].meeples
                 map.ai.chains.splice(idx1, 1)
             }
 
@@ -138,7 +139,8 @@ export function appendRoads(board: Tile[][], map: any, claims: Claim, roadEdges:
                 map.ai.chains.splice(idx1, 1)
                 map.ai.chains.splice(idx2, 1)
             }
-            map.ai.chains.push({chain: mergedChain, meeples: int, claim: "road"})
+            map.ai.chains.push({ chain: mergedChain, meeples: int, claim: "road" })
+            appendLand(map.ai.territory, row, col, node, "road")
         }
     }
 
@@ -159,7 +161,7 @@ export function appendRoads(board: Tile[][], map: any, claims: Claim, roadEdges:
         const chains: Chain[] = map[str].chains
         const territory = map[str].territory
 
-        const [chainIdx] = findChain(chains, claimed.node, "road")
+        const [chainIdx] = findChain(chains, claimed.node, "road", claimed.idx)
         const currChain: ChainNode[] = chains[chainIdx].chain
 
         const chain: ChainNode[] = []
@@ -181,7 +183,7 @@ export function appendRoads(board: Tile[][], map: any, claims: Claim, roadEdges:
             chain.forEach((curr: ChainNode) => appendLand(map.ai.territory, curr.node.row as number, curr.node.col as number, curr.node, "road"))
             appendLand(map.ai.territory, row, col, node, "road")
             
-            const [idx] = findChain(map.ai.chains, claimed.node, "road")
+            const [idx] = findChain(map.ai.chains, claimed.node, "road", claimed.idx)
             map.ai.chains[idx].chain = mergedChain
         }
     }
@@ -205,15 +207,15 @@ export function appendRoads(board: Tile[][], map: any, claims: Claim, roadEdges:
         const aiChains: Chain[] = map.ai.chains
         const aiTerritory = map.ai.territory
 
-        const [chainIdx1] = findChain(playerChains, currPlayer.node, "road")
-        const [chainIdx2] = findChain(aiChains, currAi.node, "road")
+        const [chainIdx1] = findChain(playerChains, currPlayer.node, "road", currPlayer.idx)
+        const [chainIdx2] = findChain(aiChains, currAi.node, "road", currAi.idx)
         const chain1 = playerChains[chainIdx1].chain
         const chain2 = aiChains[chainIdx2].chain
         
         const mergedChain = joinChains(chain1, chain2, currPlayer.node, currAi.node, node)
 
         if (str === "player") {
-            const [idx] = findChain(playerChains, currAi.node, "road")
+            const [idx] = findChain(playerChains, currAi.node, "road", currAi.idx)
             const int: number = playerChains[chainIdx1].meeples + playerChains[idx].meeples
 
             playerChains[chainIdx1].meeples = int
@@ -221,10 +223,10 @@ export function appendRoads(board: Tile[][], map: any, claims: Claim, roadEdges:
             aiChains[chainIdx2].chain = mergedChain
             
             playerChains.splice(idx, 1)
-            chain1.forEach((curr: ChainNode) => appendLand(aiTerritory, curr.node.row as number, curr.node.col as number, curr.node, "road"))
+            chain1.forEach((curr: ChainNode) => appendLand(aiTerritory, curr.node.row as number, curr.node.col as number, curr.node, "road", curr.edgeIdx))
         }
         else if (str === "ai") {
-            const [idx] = findChain(aiChains, currPlayer.node, "road")
+            const [idx] = findChain(aiChains, currPlayer.node, "road", currPlayer.idx)
             const int: number = aiChains[chainIdx2].meeples + aiChains[idx].meeples
 
             aiChains[chainIdx2].meeples = int
@@ -232,11 +234,11 @@ export function appendRoads(board: Tile[][], map: any, claims: Claim, roadEdges:
             playerChains[chainIdx1].chain = mergedChain
             
             aiChains.splice(idx, 1)
-            chain2.forEach((curr: ChainNode) => appendLand(playerTerritory, curr.node.row as number, curr.node.col as number, curr.node, "road"))
+            chain2.forEach((curr: ChainNode) => appendLand(playerTerritory, curr.node.row as number, curr.node.col as number, curr.node, "road", curr.edgeIdx))
         }
         else {
-            chain1.forEach((curr: ChainNode) => appendLand(aiTerritory, curr.node.row as number, curr.node.col as number, curr.node, "road"))
-            chain2.forEach((curr: ChainNode) => appendLand(playerTerritory, curr.node.row as number, curr.node.col as number, curr.node, "road"))
+            chain1.forEach((curr: ChainNode) => appendLand(aiTerritory, curr.node.row as number, curr.node.col as number, curr.node, "road", curr.edgeIdx))
+            chain2.forEach((curr: ChainNode) => appendLand(playerTerritory, curr.node.row as number, curr.node.col as number, curr.node, "road", curr.edgeIdx))
             playerChains[chainIdx1].chain = mergedChain
             aiChains[chainIdx2].chain = mergedChain
         }

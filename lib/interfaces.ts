@@ -14,6 +14,7 @@ export interface Tile {
     unjoined?: boolean
     village?: boolean
     deadEnd?: boolean
+    claimed?: boolean
 }
 
 export interface Land {
@@ -36,8 +37,7 @@ export interface ChainNode {
 }
 
 export interface Completed {
-    player: { idx: number, claim: string }[]
-    ai: { idx: number, claim: string }[]
+    [key: string]: { idx: number, claim: string, extra?: boolean }[]
 }
 
 export interface Overlap {
@@ -57,25 +57,34 @@ export interface Claim {
     city?: number, 
     monastery?: number
     edgeIndices?: number[]
+    [key: string]: number | number[] | undefined;
+}
+
+
+export interface PotentialClaim {
+    chain: ChainNode[], 
+    str: string, 
+    matrix: Land[][]
+    idx?: number
 }
 
 export interface PlayerChain {
     chain: ChainNode[]
     node: Tile
-    overlap: boolean
+    overlap: boolean, 
+    edgeIdx?: number
 }
 export interface Territory {
+    [key: string]: {territory: Land[][], chains: Chain[], meeples?: number}
     player: {
         territory: Land[][]
         chains: Chain[]
+        meeples: number
     }
     ai: {
         territory: Land[][]
         chains: Chain[]
-    }
-    player3?: {
-        territory: Land[][]
-        chains: Chain[]
+        meeples: number
     }
 }
 
@@ -91,4 +100,24 @@ export interface Neighbor {
     str: string, 
     idx: number
 }
+export interface Stats {
+    [key: string] : number
+    finalScore: number
+    cities: number
+    roads: number
+    monasteries: number
+    stolenCities: number
+    stolenRoads: number
+    maxCity: number
+    maxRoad: number
+}
 
+export interface Overview {
+    [key: string]: Stats
+}
+
+export interface Meeple {
+    [key: string]: number
+    player: number
+    ai: number
+}

@@ -5,7 +5,11 @@ export function removeOverlap(completed: Completed, map: Territory, chain: Chain
     for (let i = 0; i < arr.length; i++) {
         const curr = arr[i]
         const currChain = map.ai.chains[curr.idx].chain
-        if (currChain === chain) {
+
+        const str = JSON.stringify(currChain)
+        const str2 = JSON.stringify(chain)
+
+        if (str === str2) {
             return map.ai.chains[curr.idx].meeples
         }
     }

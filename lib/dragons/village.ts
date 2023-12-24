@@ -1,11 +1,16 @@
 import { Claim, Tile, Chain, ChainNode } from "../interfaces"
-import { neighborNodes } from "../helperFunctions"
-import { findChain } from "../helperFunctions"
+import { findSingleEdge, neighborNodes } from "../helperFunctions"
 import { appendLand } from "../helperFunctions"
+import { findChain } from "../chains/findChain"
 
 
 export function appendVillage(board: Tile[][], map: any, claims: Claim, node: Tile, dir: number[][], joinMap: Map<number, number>, row: number, col: number) {
     const arr = claims.edgeIndices as number[]
+
+    if (node.monastery || node.deadEnd) {
+        const edgeIdx = findSingleEdge(node.edges, "road")
+        arr.push(edgeIdx)
+    }
 
     for (let i = 0; i < arr.length; i++) {
         const idx = arr[i]
@@ -28,7 +33,7 @@ export function appendVillage(board: Tile[][], map: any, claims: Claim, node: Ti
         }
 
         const chains: Chain[] = map[str].chains
-        const [chainIdx] = findChain(chains, neighbor.node, "road")
+        const [chainIdx] = findChain(chains, neighbor.node, "road", neighbor.idx)
 
         const chain: ChainNode[] = chains[chainIdx].chain
         
@@ -43,7 +48,7 @@ export function appendVillage(board: Tile[][], map: any, claims: Claim, node: Ti
             appendLand(map.player.territory, row, col, node, "road", idx)
             appendLand(map.ai.territory, row, col, node, "road", idx)
 
-            const [currIdx] = findChain(map.ai.chains, neighbor.node, "road")
+            const [currIdx] = findChain(map.ai.chains, neighbor.node, "road", neighbor.idx)
 
             map.player.chains = chains
             map.ai.chains[currIdx].chain = chain

@@ -71,13 +71,23 @@ export function filterThreeWalls(arr: ChainNode[]) {
     return res 
 }
 
+export function selectMonasteries(arr: Tile[]) {
+    const res: Tile[] = []
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i].monastery || !arr[i].village) {
+            if (arr[i].edges.includes("field") && !arr[i].edges.includes("city")) {
+                res.push(arr[i])
+            }
+        }
+    }
+    return res 
+}
+
 export function selectCities(arr: Tile[]) {
     const res: Tile[] = []
     for (let i = 0; i < arr.length; i++) {
-        if (arr[i].edges.includes("city") && !arr[i].edges.includes("road")) {
-            if (selectWalls(arr[i].edges, 2)) {
-                res.push(arr[i])
-            }
+        if (arr[i].edges.includes("city")) {
+            res.push(arr[i])
         }
     }
     return res 
@@ -90,16 +100,13 @@ function selectWalls(edges: string[], target: number) {
             int++
         }
     }
-    return int === target
+    return int <= target
 }
 
 export function selectRoads(arr: Tile[]) {
     const res: Tile[] = []
     for (let i = 0; i < arr.length; i++) {
         if (arr[i].edges.includes("road") && !arr[i].monastery) {
-            if (isRoadStraight(arr[i].edges)) {
-                continue
-            }
             res.push(arr[i])
         }
     }
@@ -130,13 +137,14 @@ export function isOverlap(arr: Neighbor[]): boolean {
 
 export function neighborNodes(board: Tile[][], playerTerritory: Land[][], aiTerritory: Land[][], arr: Curr[], claim: string): string[] {
     const strs: string[] = []
+
     for (let i = 0; i < arr.length; i++) {
         const curr = arr[i]
         if (isTerritoryClaimed(playerTerritory, curr.node, curr.row, curr.col, curr.idx, claim)) {
             if (isTerritoryClaimed(aiTerritory, curr.node, curr.row, curr.col, curr.idx, claim)) {
                 strs.push("overlap")
             }
-            else strs.push("player")  
+            else strs.push("player")
         }
 
         else if (isTerritoryClaimed(aiTerritory, curr.node, curr.row, curr.col, curr.idx, claim)) {
@@ -169,21 +177,6 @@ export function findNeighbor(neighbors: Curr[], idx: number) {
         }
     }
     return neighbors[0]
-}
-
-export function findChain(chains: Chain[], node: Tile, claim: string): number[] {
-    for (let i = 0; i < chains.length; i++) {
-        if (chains[i].claim !== claim) {
-            continue
-        }
-        const chain = chains[i].chain
-        for (let j = 0; j < chain.length; j++) {
-            if (chain[j].node === node) {
-                return [i, j]
-            }
-        } 
-    }
-    return [-1, -1]
 }
 
 export function appendLand(matrix: Land[][], row: number, col: number, node: Tile, claim: string, idx?: number) {
@@ -300,6 +293,15 @@ export function findEdges(edges: string[], claim: string) {
     return arr 
 }
 
+export function findSingleEdge(edges: string[], claim: string): number {
+    for (let i = 0; i < edges.length; i++) {
+        if (edges[i] === claim) {
+            return i
+        }
+    }
+    return -1 
+}
+
 export function findOtherEdges(edges: string[], currEdgeIdx: number, claim: string) {
     const indices: number[] = []
     for (let i = 0; i < edges.length; i++) {
@@ -327,4 +329,11 @@ export function filterEdges(edges: string[], key: string) {
         }
     }
     return arr 
+} 
+
+export const dirIdxMap: {[key: string]: number} = {
+    "top": 0, 
+    "right": 1, 
+    "down": 2, 
+    "left": 3
 } 

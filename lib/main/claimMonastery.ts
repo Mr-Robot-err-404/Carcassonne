@@ -1,8 +1,8 @@
-import { Tile, Land } from "../interfaces"
+import { Tile, Land, ChainNode } from "../interfaces"
 import { appendLand } from "../territory/appendLand"
 
-export function claimMonastery(board: Tile[][], node: Tile, row: number, col: number, territory: Land[][]) {
-    const matrix = territory.map((row: Land[]) => [...row])
+export function claimMonastery(board: Tile[][], node: Tile, row: number, col: number, territory: Land[][]): [chain: ChainNode[], matrix: Land[][]] {
+    const matrix = [...territory]
     const dir = [
         [-1, 0], 
         [0, 1], 
@@ -13,7 +13,8 @@ export function claimMonastery(board: Tile[][], node: Tile, row: number, col: nu
         [1, -1], 
         [1, 1]
     ]
-    const chain = [{node: node}]
+    node.claimed = true
+    const chain = [{ node: node }]
     appendLand(matrix, row, col, node, "monastery")
     
     for (let i = 0; i < dir.length; i++) {
@@ -23,9 +24,8 @@ export function claimMonastery(board: Tile[][], node: Tile, row: number, col: nu
         if (neighbor.empty) {
             continue
         }
-
-        chain.push({node: neighbor})
+        chain.push({ node: neighbor })
         appendLand(matrix, row + y, col + x, neighbor, "monastery")
     }
-    return [matrix, chain]
+    return [chain, matrix]
 }

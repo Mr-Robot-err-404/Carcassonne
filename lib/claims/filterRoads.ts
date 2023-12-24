@@ -5,6 +5,7 @@ export function filterRoads(board: Tile[][], claims: Claim, filteredClaims: Clai
     if (!claims.road) {
         return 
     }
+    const set = new Set()
     for (let i = 0; i < edges.length; i++) {
         if (edges[i] !== "road") {
             continue
@@ -31,12 +32,16 @@ export function filterRoads(board: Tile[][], claims: Claim, filteredClaims: Clai
                     continue
                 }
             }
+            if (node.village && set.has(i)) {
+                continue
+            }
             const int = claims.road as number
             const val = filteredClaims.road as number
             claims.road = int - 1 
             filteredClaims.road = val + 1
     
             if (node.village) {
+                set.add(i)
                 removeIdx(claims.edgeIndices as number[], i)
                 filteredClaims.edgeIndices?.push(i)
             }

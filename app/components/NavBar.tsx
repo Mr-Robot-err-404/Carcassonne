@@ -1,26 +1,16 @@
 'use client'
 
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import GridContext from "../context/GridContext"
-import { Land } from "@/lib/interfaces"
-import { landChain } from "@/lib/helperFunctions"
 import Scoreboard from "./Scoreboard"
+import { BsArrowLeftCircle, BsArrowRightCircle } from 'react-icons/bs'
 
 export default function NavBar() {
-    const { playerTurn, setPlayerTurn, board, playerTerritory, opponentTerritory } = useContext(GridContext)
+    const { playerTurn, setPlayerTurn, board, state, idx, setIdx, meeples } = useContext(GridContext)
+    const [hover, setHover] = useState(0)
 
     const handleNextMove = () => {
         setPlayerTurn(!playerTurn)
-    }
-
-    function whatAboutTheDroidAttackOnTheWookies() {
-        if (playerTurn) {
-            const arr = landChain(playerTerritory)
-            console.log("Player land chain: ", arr)
-            return
-        }
-        const arr = landChain(opponentTerritory)
-        console.log("AI land chain: ", arr)
     }
 
     return (
@@ -32,8 +22,33 @@ export default function NavBar() {
                 <Scoreboard/>
                 <div>
                     <div className="flex md:space-x-10 space-x-2 px-3 md:px-6">
+                        <h2>player: {meeples.player}</h2>
+                        <h2>ai: {meeples.ai}</h2>
+                        <BsArrowLeftCircle
+                            onClick={() => {
+                                if (idx == 1) {
+                                    return 
+                                } 
+                                setIdx((prev: number) => prev - 1)
+                            }}
+                            onMouseEnter={() => setHover(1)}
+                            onMouseLeave={() => setHover(0)}
+                            fill={hover == 1 ? "#2563eb" : "#f8fafc"}
+                            size={25}
+                        />
+                        <BsArrowRightCircle
+                            onClick={() => {
+                                if (idx == state.length - 1) {
+                                    return 
+                                } 
+                                setIdx((prev: number) => prev + 1)
+                            }}
+                            onMouseEnter={() => setHover(2)}
+                            onMouseLeave={() => setHover(0)}
+                            fill={hover == 2 ? "#2563eb" : "#f8fafc"}
+                            size={25}
+                        />
                         <h2 onClick={() => console.log(JSON.stringify(board))} className="text-lg hover:text-blue-500 cursor-pointer">Board</h2>
-                        <h2 onClick={whatAboutTheDroidAttackOnTheWookies} className="text-sm md:text-lg hover:text-blue-500 cursor-pointer">Land</h2>
                         <h2 onClick={handleNextMove} className="text-sm md:text-lg hover:text-blue-500 cursor-pointer">Next turn</h2>
                         <div className="w-24">
                             <h2 className={`text-sm md:text-lg ${playerTurn ? "text-blue-500" : "text-orange-500"}`}>{playerTurn ? "Your move" : "Ai's move"}</h2>

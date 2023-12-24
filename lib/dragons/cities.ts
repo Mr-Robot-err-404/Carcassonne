@@ -1,5 +1,5 @@
 import { Claim, Curr, Neighbor, PlayerChain, ChainNode, Territory, Tile } from "../interfaces";
-import { findChain, findKey, findNeighbor, isOverlap } from "../helperFunctions";
+import { findKey, findNeighbor, isOverlap } from "../helperFunctions";
 import { findNeighborNodes } from "../territory/neighbors";
 import { joinCityChains } from "../claimFunctions";
 import { createEmptyMatrix } from "../gridSetup";
@@ -11,6 +11,8 @@ import { sumMeeples } from "../chains/sumMeeples";
 import { appendFinalChain } from "./finalChain";
 import { appendUnjoinedCity } from "./unjoined";
 import { sortChainIndices } from "../claims/sortIndices";
+import { findChain } from "../chains/findChain";
+import { copy } from "../ai/copy";
 
 export function appendCities(board: Tile[][], map: any, claims: Claim, cityEdges: number[], node: Tile, row: number, col: number, dir: number[][], joinMap: Map<number, number>) {
     //Battle not with monsters, lest ye become a monster...
@@ -53,60 +55,76 @@ export function appendCities(board: Tile[][], map: any, claims: Claim, cityEdges
     const chains: ChainNode[][] = []
     const playerChains: PlayerChain[] = []
     const aiChains: PlayerChain[] = []
+    const aiChainIndices: number[] = []
+    const playerChainIndices: number[] = []
 
     for (let i = 0; i < arr.length; i++) {
         const str = arr[i].str
         const idx = arr[i].idx
         const curr = findNeighbor(neighbors, idx) as Curr
 
+        console.log("curr: ", curr)
+
         if (str !== "ai") {
-            const [chainIdx] = findChain(map.player.chains, curr.node, "city")
+            const [chainIdx] = findChain(map.player.chains, curr.node, "city", curr.edgeIdx)
+
+            console.log("chainIdx: ", chainIdx)
+
             const chain: ChainNode[] = map.player.chains[chainIdx].chain
 
             if (chains.includes(chain)) {
                 continue
             }
+            playerChainIndices.push(chainIdx)
+
             playerChains.push({
                 chain: chain, 
                 node: curr.node,
-                overlap: str === "overlap"
+                overlap: str === "overlap", 
+                edgeIdx: curr.edgeIdx
             })
             chains.push(chain)
 
             if (str === "overlap") {
+                const [idx] = findChain(map.ai.chains, curr.node, "city", curr.edgeIdx)
+                aiChainIndices.push(idx)
                 aiChains.push({
                     chain: chain, 
                     node: curr.node,
-                    overlap: true
+                    overlap: true, 
+                    edgeIdx: curr.edgeIdx
                 })
             }
             continue
         }
         
-        const [chainIdx] = findChain(map.ai.chains, curr.node, "city")
+        const [chainIdx] = findChain(map.ai.chains, curr.node, "city", curr.edgeIdx)
         const chain: ChainNode[] = map.ai.chains[chainIdx].chain
 
         if (chains.includes(chain)) {
             continue
         }
+        aiChainIndices.push(chainIdx)
+
         aiChains.push({
             chain: chain, 
             node: curr.node, 
-            overlap: false
+            overlap: false, 
+            edgeIdx: curr.edgeIdx
         })
         chains.push(chain)
     }
 
     const mergedChain: ChainNode[] = joinCityChains(chains)
-    const playerChainIndices: number[] = sortChainIndices(map, playerChains, "player")
-    const aiChainIndices: number[] = sortChainIndices(map, aiChains, "ai")
+    playerChainIndices.sort((a: number, b: number) => b - a)
+    aiChainIndices.sort((a: number, b: number) => b - a)
 
     const key = findKey(nodes)
     const currChain: ChainNode[] = []
 
     const visited: boolean[][] = createEmptyMatrix()
     visited[row][col] = true
-    visitNodes(mergedChain, visited)
+    visitNodes(mergedChain, visited, "city")
 
     for (let i = 0; i < unclaimed.length; i++) {
         const idx = unclaimed[i]
@@ -118,13 +136,13 @@ export function appendCities(board: Tile[][], map: any, claims: Claim, cityEdges
     if (aiChains.length) {
         appendEnemyLand(playerChains, map.ai.territory, "city")
     }
-    
+
     if (playerChains.length) {
         appendEnemyLand(aiChains, map.player.territory, "city")
     }
 
     if (isOverlap(nodes)) {
-        currChain.forEach((curr: ChainNode) => appendLand(map.ai.territory, curr.node.row as number, curr.node.col as number, curr.node, "city"))
+        currChain.forEach((curr: ChainNode) => appendLand(map.ai.territory, curr.node.row as number, curr.node.col as number, curr.node, "city", curr.edgeIdx))
     }
 
     const [playerMeeples, aiMeeples] = sumMeeples(playerChainIndices, aiChainIndices, map)

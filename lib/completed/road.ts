@@ -1,24 +1,30 @@
 import { ChainNode, Land } from "../interfaces";
+import { isDeadend } from "./deadend";
+import { isRoadClosed } from "./empty";
 import { isRoadLoop } from "./loop";
 
-export function isRoadComplete(chain: ChainNode[], matrix: Land[][]) {
+export function isRoadComplete(chain: ChainNode[], matrix: Land[][], dir: number[][]) {
     const start = chain[0]
     const end = chain[chain.length - 1]
+
+    if (chain.length < 2) {
+        return false
+    }
 
     if (start.node === end.node) {
         return true
     }
+    
+    if (isDeadend(chain)) {
+        return true
+    }
 
-    if (isRoadLoop(chain, matrix, start, end)) {
+    if (isRoadLoop(chain)) {
         return true 
     }
-
-    if (!start.node.village && !start.node.deadEnd) {
-        return false
+    
+    if (isRoadClosed(chain, matrix, dir)) {
+        return true
     }
-
-    if (!end.node.village && !end.node.deadEnd) {
-        return false 
-    }
-    return true
+    return false
 }

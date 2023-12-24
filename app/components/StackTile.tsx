@@ -6,7 +6,7 @@ import { CSS } from '@dnd-kit/utilities';
 import GridContext from "../context/GridContext"
 
 export default function StackTile() {
-    const { currTile, updateCell, board, updateTerritory, setRecentTile, playerTerritory, playerChains, opponentTerritory, opponentChains, updateScore } = useContext(GridContext)
+    const { currTile, updateCell, board, overview, updateTerritory, setRecentTile, playerTerritory, playerChains, opponentTerritory, opponentChains, updateScore, finishMove, isClaimReady, playerTurn } = useContext(GridContext)
     const { attributes, listeners, setNodeRef, transform } = useDraggable({
         id: 'stack-tile',
         data: {
@@ -19,21 +19,23 @@ export default function StackTile() {
             opponentTerritory: opponentTerritory, 
             opponentChains: opponentChains, 
             updateTerritory: updateTerritory, 
-            updateScore: updateScore
+            updateScore: updateScore, 
+            finishMove: finishMove, 
+            overview: overview
         }
     })
     
     const style = {
         transform: CSS.Translate.toString(transform),
-    }
+    } 
 
     return (
         <>
             <div
-                className={`flex items-center justify-center bg-slate-500 w-24 h-24 rounded-lg select-none`}>
+                className={`flex items-center justify-center bg-light-brown w-24 h-24 rounded-lg select-none`}>
                 <div
                     style={style}
-                    ref={setNodeRef}
+                    ref={playerTurn ? setNodeRef : null}
                     {...listeners} {...attributes}
                     className={`w-20 h-20 rounded-md z-30`}>
                     <img
