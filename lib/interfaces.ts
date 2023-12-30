@@ -23,6 +23,9 @@ export interface Land {
     edgeIndices: number[]
     row: number
     col: number
+    claimed?: string
+    claimedIdx?: number
+    complete: string[]
 }
 
 export interface Chain {
@@ -48,6 +51,7 @@ export interface Overlap {
 }
 
 export interface Score {
+    [key: string]: number
     player: number
     ai: number
 }
@@ -65,7 +69,8 @@ export interface PotentialClaim {
     chain: ChainNode[], 
     str: string, 
     matrix: Land[][]
-    idx?: number
+    idx?: number, 
+    weight: number
 }
 
 export interface PlayerChain {
@@ -75,16 +80,14 @@ export interface PlayerChain {
     edgeIdx?: number
 }
 export interface Territory {
-    [key: string]: {territory: Land[][], chains: Chain[], meeples?: number}
+    [key: string]: {territory: Land[][], chains: Chain[]}
     player: {
         territory: Land[][]
         chains: Chain[]
-        meeples: number
     }
     ai: {
         territory: Land[][]
         chains: Chain[]
-        meeples: number
     }
 }
 
@@ -113,7 +116,9 @@ export interface Stats {
 }
 
 export interface Overview {
-    [key: string]: Stats
+    [key: string]: Stats, 
+    player: Stats, 
+    ai: Stats
 }
 
 export interface Meeple {

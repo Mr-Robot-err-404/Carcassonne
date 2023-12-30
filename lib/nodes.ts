@@ -485,3 +485,78 @@ export const emptyTile = {
     edges: [], 
     id: 69
 }
+
+export const tileSet = [
+    {
+        edges: ["field", "field", "road", "road"], 
+        num: 8
+    },
+    {
+        edges: ["city", "road", "road", "road"], 
+        num: 3
+    },
+    {
+        edges: ["city", "field", "road", "road"], 
+        num: 3
+    },
+    {
+        edges: ["field", "road", "road", "road"], 
+        num: 2
+    },
+    {
+        edges: ["road", "road", "road", "road"], 
+        num: 1
+    },
+    {
+        edges: ["city", "city", "city", "city"], 
+        num: 1
+    },
+    {
+        edges: ["road", "field", "road", "field"], 
+        num: 5
+    },
+    {
+        edges: ["city", "road", "field", "road"], 
+        num: 4
+    },
+    {
+        edges: ["city", "road", "road", "field"], 
+        num: 4
+    },
+    {
+        edges: ["road", "field", "road", "field"], 
+        num: 5
+    },
+    {
+        edges: ["field", "field", "road", "field"], 
+        num: 2
+    },
+    {
+        edges: ["field", "field", "field", "field"], 
+        num: 2
+    },
+    {
+        edges: ["city", "field", "field", "field"], 
+        num: 5
+    },
+    {
+        edges: ["city", "city", "field", "city"], 
+        num: 3
+    },
+    {
+        edges: ["city", "road", "road", "city"], 
+        num: 3
+    },
+    {
+        edges: ["city", "city", "field", "field"], 
+        num: 5
+    },
+    {
+        edges: ["field", "city", "field", "city"], 
+        num: 1
+    },
+    {
+        edges: ["city", "field", "city", "field"], 
+        num: 3
+    },
+]

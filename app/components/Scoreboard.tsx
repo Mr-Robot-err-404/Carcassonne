@@ -10,7 +10,7 @@ export default function Scoreboard() {
             <div className="flex justify-center items-center h-full w-60">
                 <h2 className="text-lg text-blue-400 mr-5">{score.player}</h2>
                                         -
-                <h2 className="text-lg text-orange-400 ml-5">{score.ai}</h2>
+                <h2 className="text-lg text-orange-500 ml-5">{score.ai}</h2>
             </div>
         </div>
     )

@@ -1,4 +1,4 @@
-import { Move } from "./aiMove";
+import { Move } from "../base_version/main";
 
 export function bestMoves(moves: Move[]) {
     let arr: Move[] = []

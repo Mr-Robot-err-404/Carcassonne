@@ -3,7 +3,7 @@ import ClaimOption from './ClaimOption'
 import { useContext, useState } from 'react'
 import GridContext from '../context/GridContext'
 import { capitalizeFirstLetter, dirIdxMap, dirMap } from '@/lib/helperFunctions'
-import { copy } from '@/lib/ai/copy'
+import { copy } from '@/lib/ai/helper/copy'
 import { claimFunction } from '@/lib/territory/claimMap'
 
 interface Props {

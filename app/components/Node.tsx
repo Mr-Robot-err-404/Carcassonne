@@ -7,7 +7,9 @@ import { useContext, useState } from "react"
 import GridContext from "../context/GridContext"
 import ClaimPopup from "./ClaimPopup"
 import { isClaimPossible } from "@/lib/claims/isClaimPossible"
-
+import Badge from "./badges/Badge"
+import { isBadgeActive } from "@/lib/claims/isBadgeActive"
+import { isBadgeValid } from "@/lib/claims/validBadge"
 
 interface NodeProps {
     isNodeCenter: boolean
@@ -25,6 +27,8 @@ export default function Node({ isNodeCenter, row, col, tile, isRecentTile }: Nod
     const {isOver, setNodeRef} = useDroppable({
         id: `${row}-${col}`,
     })
+    const [str, claim, idx, complete] = isBadgeActive(playerTerritory, opponentTerritory, row, col)
+    const isValid = isBadgeValid(str, claim, complete)
 
     return (
         <div className="relative">
@@ -43,6 +47,9 @@ export default function Node({ isNodeCenter, row, col, tile, isRecentTile }: Nod
                     height={80}
                     alt="Tile" 
                 />
+            }
+            {isValid &&
+                <Badge str={str} claim={claim} idx={idx}/>
             }
             </div> 
         </div>

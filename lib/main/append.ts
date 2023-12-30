@@ -7,6 +7,7 @@ import { completedChains } from "../completed/main"
 import { scorePoints } from "../completed/score"
 import { appendStats } from "../completed/stats"
 import { countMeeples } from "../completed/meeples"
+import { removeBadges } from "../completed/removeBadges"
 
 export function appendClaims(board: Tile[][], filteredClaims: Claim, node: Tile, map: Territory, row: number, col: number, overview: Overview): [Score, Overview, Meeple] {
     const roadEdges = findEdges(node.edges, "road")
@@ -24,6 +25,7 @@ export function appendClaims(board: Tile[][], filteredClaims: Claim, node: Tile,
     appendMonasteries(board, map, row, col)
 
     const completed: Completed = completedChains(map, dir)
+    removeBadges(completed, map)
     const stats = appendStats(overview, completed, map)
     const meeples = countMeeples(completed, map)
     const scores = scorePoints(completed, map)

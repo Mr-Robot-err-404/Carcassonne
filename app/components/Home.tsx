@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useContext, useState } from "react"
+import { useEffect, useRef, useContext, useState, MouseEvent } from "react"
 import { DndContext } from '@dnd-kit/core'
 import Grid from "./Grid"
 import NavBar from "./NavBar"
@@ -19,6 +19,8 @@ import Overview from "./Overview"
 export default function Home({ preset, game }: any) {
   const { setBoard, setValidTiles, setCurrTile, stack, isGameFinished, updateTerritory, setRecentTile, setState, setStack, updateState } = useContext(GridContext)
   const [loading, setLoading] = useState(true)
+  const [isDragging, setIsDragging] = useState(false);
+  const [currentPos, setCurrentPos] = useState({ x: 0, y: 0 });
   
   const ref: any = useRef(null)
   const center: number[] = findCenter(30, 50)
@@ -41,13 +43,33 @@ export default function Home({ preset, game }: any) {
       setBoard(preset)
       setLoading(false)
       const [x, y] = distanceToCenter(center, window.innerWidth)
+      setCurrentPos({x: x, y: y})
       ref.current.scrollTo(x, y)  
     }
   }, []) 
 
+  function handleMouseDown(e: MouseEvent) {
+    if (e.button === 2) {
+      setIsDragging(true);
+      setCurrentPos({ x: e.clientX, y: e.clientY });
+      return 
+    }
+    setIsDragging(false)
+  }
+
+  function handleMouseMove(e: MouseEvent) {
+    if (isDragging && ref.current) {
+      const dx = e.clientX - currentPos.x;
+      const dy = e.clientY - currentPos.y;
+      ref.current.scrollLeft -= dx;
+      ref.current.scrollTop -= dy;
+      setCurrentPos({ x: e.clientX, y: e.clientY });
+    }
+  }
+
   return (
     <>
-      <div ref={ref} className="w-full h-screen overflow-auto hide-scrollbar relative">
+      <div ref={ref} onMouseDown={handleMouseDown} onMouseMove={handleMouseMove} onMouseUp={() => setIsDragging(false)} className="w-full h-screen overflow-auto hide-scrollbar relative">
         <NavBar />
         <DndContext onDragEnd={(e) => handleDragEnd(e)}>
           {!loading && !isGameFinished &&
@@ -85,7 +107,7 @@ function handleDragEnd(e: any) {
 
     const map = getMap(playerTerritory, playerChains, opponentTerritory, opponentChains)
     const [scores, stats, meeples] = appendClaims(board, filteredClaims, node, map, row, col, overview)
-    
+
     finishMove(row, col, node, currClaims, map.player.territory, map.ai.territory, map.player.chains, map.ai.chains, scores.player, scores.ai, map, stats, meeples)
   }
 }

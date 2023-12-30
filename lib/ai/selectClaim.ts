@@ -1,10 +1,8 @@
-import { findEdges } from "../helperFunctions";
 import { ChainNode, Claim, Land, PotentialClaim, Territory, Tile } from "../interfaces";
 import { claimFunction } from "../territory/claimMap";
-import { bestClaim } from "./bestClaim";
-import { copy } from "./copy";
+import { copy } from "./helper/copy";
 
-export function selectClaim(board: Tile[][], currMap: Territory, node: Tile, row: number, col: number, claims: Claim) {
+export function selectClaim(board: Tile[][], currMap: Territory, node: Tile, row: number, col: number, claims: Claim, hero: string) {
     const keys = Object.keys(claims)
     const chains: PotentialClaim[] = []
 
@@ -24,13 +22,14 @@ export function selectClaim(board: Tile[][], currMap: Territory, node: Tile, row
                 const map = copy(currMap)
 
                 const createClaim = claimFunction[str]
-                const [chain, matrix] = createClaim(board, node, row, col, map.ai.territory, idx)
+                const [chain, matrix] = createClaim(board, node, row, col, map[hero].territory, idx)
 
                 chains.push({
                     chain: chain, 
                     idx: idx, 
                     str: str, 
-                    matrix: matrix
+                    matrix: matrix, 
+                    weight: 1
                 })
             }
             continue
@@ -38,12 +37,13 @@ export function selectClaim(board: Tile[][], currMap: Territory, node: Tile, row
         const map = copy(currMap)
         const createClaim = claimFunction[str]
 
-        const [chain, matrix] = createClaim(board, node, row, col, map.ai.territory)
+        const [chain, matrix] = createClaim(board, node, row, col, map[hero].territory)
         chains.push({
             chain: chain, 
             str: str, 
-            matrix: matrix
+            matrix: matrix, 
+            weight: 1
         })
     }
-    return bestClaim(chains, currMap)
+    return chains
 }

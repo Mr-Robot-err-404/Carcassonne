@@ -1,4 +1,4 @@
-import { Tile } from "../interfaces";
+import { Tile } from "../../interfaces";
 
 export function rotateNode(node: Tile, rotate: number) {
     if (rotate === 0) {

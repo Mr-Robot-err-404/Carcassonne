@@ -69,7 +69,8 @@ export function createEmptyTerritory() {
                 claims: [], 
                 edgeIndices: [], 
                 row: i, 
-                col: j
+                col: j, 
+                complete: []
             })
         }
     }

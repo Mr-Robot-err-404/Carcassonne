@@ -12,7 +12,7 @@ import { appendFinalChain } from "./finalChain";
 import { appendUnjoinedCity } from "./unjoined";
 import { sortChainIndices } from "../claims/sortIndices";
 import { findChain } from "../chains/findChain";
-import { copy } from "../ai/copy";
+import { copy } from "../ai/helper/copy";
 
 export function appendCities(board: Tile[][], map: any, claims: Claim, cityEdges: number[], node: Tile, row: number, col: number, dir: number[][], joinMap: Map<number, number>) {
     //Battle not with monsters, lest ye become a monster...
@@ -63,13 +63,8 @@ export function appendCities(board: Tile[][], map: any, claims: Claim, cityEdges
         const idx = arr[i].idx
         const curr = findNeighbor(neighbors, idx) as Curr
 
-        console.log("curr: ", curr)
-
         if (str !== "ai") {
             const [chainIdx] = findChain(map.player.chains, curr.node, "city", curr.edgeIdx)
-
-            console.log("chainIdx: ", chainIdx)
-
             const chain: ChainNode[] = map.player.chains[chainIdx].chain
 
             if (chains.includes(chain)) {

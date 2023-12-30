@@ -1,3 +1,4 @@
+import { claimedNode } from "../claims/claimedNode"
 import { Tile, Land, ChainNode } from "../interfaces"
 import { appendLand } from "../territory/appendLand"
 
@@ -16,6 +17,7 @@ export function claimMonastery(board: Tile[][], node: Tile, row: number, col: nu
     node.claimed = true
     const chain = [{ node: node }]
     appendLand(matrix, row, col, node, "monastery")
+    claimedNode(matrix, row, col, "monastery")
     
     for (let i = 0; i < dir.length; i++) {
         const x = dir[i][1]

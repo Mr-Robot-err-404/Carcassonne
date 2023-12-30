@@ -4,9 +4,10 @@ import { useContext, useState } from "react"
 import GridContext from "../context/GridContext"
 import Scoreboard from "./Scoreboard"
 import { BsArrowLeftCircle, BsArrowRightCircle } from 'react-icons/bs'
+import BlueCity from "./badges/Badge"
 
 export default function NavBar() {
-    const { playerTurn, setPlayerTurn, board, state, idx, setIdx, meeples } = useContext(GridContext)
+    const { playerTurn, setPlayerTurn, board, state, idx, setIdx, meeples, setStart } = useContext(GridContext)
     const [hover, setHover] = useState(0)
 
     const handleNextMove = () => {
@@ -22,8 +23,7 @@ export default function NavBar() {
                 <Scoreboard/>
                 <div>
                     <div className="flex md:space-x-10 space-x-2 px-3 md:px-6">
-                        <h2>player: {meeples.player}</h2>
-                        <h2>ai: {meeples.ai}</h2>
+                        <h2 onClick={() => setStart(true)} className="text-lg hover:text-blue-500 cursor-pointer">Start</h2>
                         <BsArrowLeftCircle
                             onClick={() => {
                                 if (idx == 1) {

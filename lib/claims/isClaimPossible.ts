@@ -1,4 +1,4 @@
-import { Claim } from "../interfaces";
+import { Claim, Meeple } from "../interfaces";
 
 export function isClaimPossible(claims: Claim) {
     const strs = ["city", "road", "monastery"]

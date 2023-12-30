@@ -44,8 +44,8 @@ export function updateValidTiles(board: Tile[][], validTiles: Boolean[][], row: 
 export const initOverview = {
     player: {
         finalScore: 0, 
-        cities: 0, 
-        roads: 0, 
+        city: 0, 
+        road: 0, 
         monasteries: 0, 
         stolenCities: 0, 
         stolenRoads: 0, 
@@ -54,8 +54,8 @@ export const initOverview = {
     },
     ai: {
         finalScore: 0, 
-        cities: 0, 
-        roads: 0, 
+        city: 0, 
+        road: 0, 
         monasteries: 0, 
         stolenCities: 0, 
         stolenRoads: 0, 

@@ -1,4 +1,4 @@
-import { copy } from "../ai/copy";
+import { copy } from "../ai/helper/copy";
 import { findChain } from "../chains/findChain";
 import { Completed, Overview, Territory } from "../interfaces";
 

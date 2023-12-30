@@ -7,14 +7,14 @@ export default function Overview() {
     const { overview } = useContext(GridContext)
     const keys = Object.keys(overview.player)
     const strMap: {[key: string]: string} = {
-        "finalScore": "final score",
-        "cities": "cities completed",
-        "roads": "roads completed", 
-        "monasteries": "monasteries",
-        "stolenCities": "cities stolen", 
-        "stolenRoads": "roads stolen", 
-        "maxCity": "largest city", 
-        "maxRoad": "longest road"
+        finalScore: "final score",
+        city: "cities completed",
+        road: "roads completed", 
+        monasteries: "monasteries",
+        stolenCities: "cities stolen", 
+        stolenRoads: "roads stolen", 
+        maxCity: "largest city", 
+        maxRoad: "longest road"
     }
     return (
             <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex w-96 flex-col rounded-lg bg-slate-800 border border-slate-500 z-30">
