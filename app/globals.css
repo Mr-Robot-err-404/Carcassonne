@@ -18,6 +18,27 @@
   height: 2000px;
 }
 
+.left-120 {
+  left: 30rem
+}
+.left-180 {
+  left: 45rem
+}
+.right-120 {
+  right: 30rem
+}
+
+.menu-dimensions {
+  width: 1920px;
+  height: 1080px;
+}
+
+@media (min-width: 640px) {
+  .sm\:menu-width {
+      width: 35rem;
+  }
+}
+
 .bg-img {
   background-image: url("/wood-textures/simon-berger-JH_R66BihvA-unsplash.jpg");
 }

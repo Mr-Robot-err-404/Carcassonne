@@ -10,7 +10,7 @@ export default function Overview() {
         finalScore: "final score",
         city: "cities completed",
         road: "roads completed", 
-        monasteries: "monasteries",
+        monastery: "monasteries",
         stolenCities: "cities stolen", 
         stolenRoads: "roads stolen", 
         maxCity: "largest city", 

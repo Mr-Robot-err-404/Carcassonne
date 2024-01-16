@@ -1,10 +1,15 @@
 import { isOverlap } from "../chains/overlap";
-import { Completed, Overlap, Territory } from "../interfaces";
+import { Completed, Overlap, Overview, Territory } from "../interfaces";
 import { overlapExists } from "./overlapExists";
 import { removeOverlap } from "./removeOverlap";
 import { sumPoints } from "./sumPoints";
 
-export function scorePoints(completed: Completed, map: Territory) {
+const stolenMap: {[key: string]: string} = {
+    road: "stolenRoads", 
+    city: "stolenCities"
+}
+
+export function scorePoints(completed: Completed, map: Territory, stats: Overview) {
     const overlap: Overlap[] = []
     const scores = {
         player: 0, 
@@ -55,10 +60,14 @@ export function scorePoints(completed: Completed, map: Territory) {
         const sum = sumPoints(chain, curr.claim)
 
         if (playerMeeples > aiMeeples) {
+            const key = stolenMap[curr.claim]
+            stats.player[key]++
             scores.player += sum 
             continue
         }
         else if (aiMeeples > playerMeeples) {
+            const key = stolenMap[curr.claim]
+            stats.ai[key]++
             scores.ai += sum
             continue
         }

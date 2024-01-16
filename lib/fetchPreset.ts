@@ -8,7 +8,7 @@ export async function fetchPreset(idx: number) {
 }
 
 export async function fetchGame() {
-    const jsonDirectory = path.join(process.cwd(), 'app/games/main_event')
-    const data = await fs.readFile(jsonDirectory + `/somePeople.json`, 'utf8')
+    const jsonDirectory = path.join(process.cwd(), 'app/games/arena')
+    const data = await fs.readFile(jsonDirectory + `/uncle_bob.json`, 'utf8')
     return JSON.parse(data)
 }

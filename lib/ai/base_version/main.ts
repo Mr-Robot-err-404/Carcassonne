@@ -5,14 +5,15 @@ import { Claim, Meeple, Overview, PotentialClaim, Score, Territory, Tile } from 
 import { appendClaims } from "../../main/append";
 import { filterClaims } from "../../main/filter";
 import { isMoveLegal } from "../../main/legal";
-import { bestMoves } from "../eval/bestMove";
+import { bestMoves } from "../eval/move";
 import { copy } from "../helper/copy";
 import { finalEval } from "../eval/main";
 import { validMoves } from "../helper/moves";
 import { rotateNode } from "../helper/rotate";
-import { selectClaim } from "../selectClaim";
-import { bestClaim } from "../eval/bestClaim";
+import { selectClaims } from "../claims/selectClaim";
+import { bestClaim } from "../eval/claim";
 import { claimEval } from "../board_vision/claimEval";
+import { isMoveImpossible } from "../helper/impossible";
 
 export interface Move {
     row: number
@@ -25,6 +26,7 @@ export interface Move {
     claim: PotentialClaim | undefined
     stats: Overview, 
     meeples: Meeple
+    impossible?: boolean
 }
 
 const enemyMap: {[key: string]: string} = {
@@ -37,6 +39,10 @@ export function aiMove(board: Tile[][], currMap: Territory, validTiles: boolean[
     const moves: Move[] = []
     const enemy = enemyMap[hero]
     let rotate = 0
+
+    if (isMoveImpossible(board, currNode, tiles)) {
+        return {impossible: true}
+    }
     
     for (let i = 0; i < 4; i++) {
         for (let j = 0; j < tiles.length; j++) {
@@ -61,7 +67,7 @@ export function aiMove(board: Tile[][], currMap: Territory, validTiles: boolean[
             let claim: PotentialClaim | undefined
             
             if (meeples[hero] + heroMeeples > 0) {
-                const chains = selectClaim(board, map, node, square.row, square.col, currClaims, hero) 
+                const chains = selectClaims(board, map, node, square.row, square.col, currClaims, hero) 
                 claim = bestClaim(chains, map, hero)
             }
             const currEval = finalEval(map, claim, square.row, square.col, filteredClaims, scores, hero, enemy, currMap, heroMeeples)

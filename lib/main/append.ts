@@ -22,13 +22,13 @@ export function appendClaims(board: Tile[][], filteredClaims: Claim, node: Tile,
     
     appendRoads(board, map, filteredClaims, roadEdges, node, row, col, dir, joinMap)
     appendCities(board, map, filteredClaims, cityEdges, node, row, col, dir, joinMap)
-    appendMonasteries(board, map, row, col)
+    appendMonasteries(board, map, row, col, node)
 
     const completed: Completed = completedChains(map, dir)
     removeBadges(completed, map)
     const stats = appendStats(overview, completed, map)
     const meeples = countMeeples(completed, map)
-    const scores = scorePoints(completed, map)
+    const scores = scorePoints(completed, map, stats)
 
     return [scores, stats, meeples]
 }

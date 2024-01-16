@@ -99,7 +99,7 @@ export const tiles = [
         end: true
     },
     {
-        img: "/cities/Adobe Scan 12 Sept 2023 (14)-1.png", 
+        img: "/cities/Adobe Scan 12 Sept 2023 (28)-1.png", 
         edges: ["city", "city", "field", "field"], 
         rotate: 0, 
         id: 15
@@ -170,7 +170,7 @@ export const tiles = [
         end: true
     },
     {
-        img: "/cities/Adobe Scan 12 Sept 2023 (28)-1.png", 
+        img: "/cities/Adobe Scan 12 Sept 2023 (14)-1.png", 
         edges: ["city", "city", "field", "field"], 
         rotate: 0, 
         id: 25
@@ -331,14 +331,14 @@ export const tiles = [
         deadEnd: true
     },
     {
-        img: "/roads/Adobe Scan 12 Sept 2023 (17)-1.png", 
+        img: "/roads/Adobe Scan 12 Sept 2023 (18)-1.png", 
         edges: ["road", "field", "road", "field"], 
         rotate: 0, 
         id: 48,
         garden: true
     },
     {
-        img: "/roads/Adobe Scan 12 Sept 2023 (18)-1.png", 
+        img: "/roads/Adobe Scan 12 Sept 2023 (17)-1.png", 
         edges: ["road", "field", "road", "field"], 
         rotate: 0, 
         id: 49, 
@@ -359,7 +359,7 @@ export const tiles = [
         end: true
     },
     {
-        img: "/roads/Adobe Scan 12 Sept 2023 (30)-1.png", 
+        img: "/roads/Adobe Scan 12 Sept 2023 (62)-1.png", 
         edges: ["field", "field", "road", "road"], 
         rotate: 0, 
         id: 52, 
@@ -446,7 +446,7 @@ export const tiles = [
         id: 64, 
     },
     {
-        img: "/roads/Adobe Scan 12 Sept 2023 (62)-1.png", 
+        img: "/roads/Adobe Scan 12 Sept 2023 (30)-1.png", 
         edges: ["field", "field", "road", "road"], 
         rotate: 0, 
         id: 65, 
@@ -469,6 +469,12 @@ export const tiles = [
         edges: ["field", "field", "road", "road"], 
         rotate: 0, 
         id: 68, 
+    },
+    {
+        img: "/cities/Adobe Scan 16 Jan 2024-1.png", 
+        edges: ["city", "city", "road", "city"], 
+        rotate: 0, 
+        id: 70, 
     },
 ]
 

@@ -1,17 +1,15 @@
 import { ChainNode } from "../interfaces";
 
 export function isCityComplete(chain: ChainNode[]) {
-    const map: any = {
+    const map: {[key: string]: number} = {
         top: 0, 
         right: 0, 
         down: 0, 
         left: 0
     }
-
     const dir = ["top", "right", "down", "left"]
 
     for (let i = 0; i < chain.length; i++) {
-
         if (chain[i].node.unjoined) {
             const idx = chain[i].edgeIdx as number
             const key = dir[idx]

@@ -16,5 +16,9 @@ export const claimMap: {[key: string]: Style} = {
     monastery: {
         fontSize: '180', 
         text: "M"
+    }, 
+    empty: {
+        fontSize: "", 
+        text: ""
     }
 } 

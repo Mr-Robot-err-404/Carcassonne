@@ -15,6 +15,7 @@ export interface Tile {
     village?: boolean
     deadEnd?: boolean
     claimed?: boolean
+    target?: boolean
 }
 
 export interface Land {

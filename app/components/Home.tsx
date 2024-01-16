@@ -15,6 +15,7 @@ import { filterClaims } from "@/lib/main/filter"
 import { isMoveLegal } from "@/lib/main/legal"
 import { getMap } from "@/lib/territory/map"
 import Overview from "./Overview"
+import { Scoreboard } from "./Scoreboard"
 
 export default function Home({ preset, game }: any) {
   const { setBoard, setValidTiles, setCurrTile, stack, isGameFinished, updateTerritory, setRecentTile, setState, setStack, updateState } = useContext(GridContext)
@@ -70,12 +71,13 @@ export default function Home({ preset, game }: any) {
   return (
     <>
       <div ref={ref} onMouseDown={handleMouseDown} onMouseMove={handleMouseMove} onMouseUp={() => setIsDragging(false)} className="w-full h-screen overflow-auto hide-scrollbar relative">
-        <NavBar />
+        <NavBar loading={loading} />
+        <Scoreboard loading={loading}/>
         <DndContext onDragEnd={(e) => handleDragEnd(e)}>
           {!loading && !isGameFinished &&
-            <TilePlaceholder />
+            <TilePlaceholder/>
           }
-          <Grid center={center}/>
+          <Grid center={center} />
         </DndContext>
         {isGameFinished && <Overview/>}
       </div>
