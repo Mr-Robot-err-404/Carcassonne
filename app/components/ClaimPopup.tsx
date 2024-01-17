@@ -57,11 +57,7 @@ export default function ClaimPopup({ toggle, setToggle, isNodeClaimed, setIsNode
                         const str = capitalizeFirstLetter(key)
 
                         if (int === 0) {
-                            return (
-                                <div key={"nope"} className='flex justify-center'>
-                                    
-                                </div>
-                            )
+                            return 
                         }
                         if ((key === "road" && recentTile.village) || (key === "city" && recentTile.unjoined)) {
                             const map = dirMap(recentTile, key)
@@ -97,12 +93,13 @@ export default function ClaimPopup({ toggle, setToggle, isNodeClaimed, setIsNode
                     })}
                 </div>
             </div>
+            {selected &&
             <button
-                className={`absolute z-10 -translate-y-9 translate-x-4 transition-opacity ${selected ? "opacity-100 duration-300" : "opacity-0"} px-1 bg-green-500 border-2 border-transparent hover:border-slate-300 rounded-md text-sm`}
+                className={`absolute z-10 -translate-y-9 translate-x-4  px-1 bg-green-500 border-2 border-transparent hover:border-slate-300 rounded-md text-sm`}
                 onClick={handleClaim}
             >
                 Claim
-            </button>
+            </button>}
             <div className="absolute z-20 w-2 h-2 bg-gray-800 translate-x-9 popover-y-arrow rotate-45"></div>
         </div>
     )

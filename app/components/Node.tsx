@@ -24,6 +24,7 @@ export default function Node({ isNodeCenter, row, col, tile, isRecentTile }: Nod
     const [toggle, setToggle] = useState(false)
     const [isNodeClaimed, setIsNodeClaimed] = useState(false)
     const { validTiles, playerTurn, playerTerritory, opponentTerritory, claims, isClaimReady } = useContext(GridContext)
+    
     const {isOver, setNodeRef} = useDroppable({
         id: `${row}-${col}`,
     })

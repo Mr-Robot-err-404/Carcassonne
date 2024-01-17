@@ -73,6 +73,10 @@
   height: 136px;
 }
 
+.mb-xs {
+  margin-bottom: 1px;
+}
+
 .bg-light-brown {
   --tw-bg-opacity: 1;
   background-color: rgb(196 164 132 / var(--tw-bg-opacity));
