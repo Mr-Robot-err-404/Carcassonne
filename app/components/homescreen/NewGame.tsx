@@ -58,7 +58,7 @@ export default function NewGame() {
                 <Select map={map.mode} type={"map"} handleOption={handleOption} options={options}/>
                 <div className="flex justify-between items-center h-14 w-full rounded-b-lg px-8 border-t mt-4">
                     <button className="rounded-lg py-1 px-2 bg-blue-500 hover:bg-blue-400">Rules</button>
-                    <Link href={`/session/${options.opponent}-${options.map}`}>
+                    <Link href={`/session/${options.opponent}-${options.map}-0`}>
                         <button className="rounded-lg py-1 px-2 bg-green-500 hover:bg-green-400">Start</button>
                     </Link>
                 </div>

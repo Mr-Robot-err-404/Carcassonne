@@ -1,5 +1,6 @@
-import NewGame from "./components/NewGame"
+import NewGame from "./components/homescreen/NewGame"
 import Image from "next/image"
+import { Setup } from "./components/homescreen/Setup"
 
 export default function Main() {
     return (
@@ -17,9 +18,7 @@ export default function Main() {
                     }}
                 />
             </div>
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mt-24">
-                <NewGame/>
-            </div>
+            <Setup/>
         </div>
     )
 }
