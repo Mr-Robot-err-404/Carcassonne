@@ -9,7 +9,7 @@ export function Dragging() {
             <div className="ml-20">
               <Placeholder/>  
             </div>
-          <p>This tile can rotated in either direction using the 2 buttons. The game is finished when all tiles in the stack have been played.</p> 
+          <p>This tile can be rotated in either direction using the 2 buttons. The game is finished when all tiles in the stack have been played.</p> 
         </DndContext> 
       </>
     )

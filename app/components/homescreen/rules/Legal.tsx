@@ -66,7 +66,7 @@ export function Legal() {
                     </div>
                 </div>
             </div>       
-            <p>In the second example, the bottom left tile matches the road above it, but doesn't match to its right. A tile won't be placed on the board if the move is illegal.</p>
+            <p>In the second example, the bottom left tile matches the road above it, but doesn't match to its right. A tile won't be accepted on the board if the move is illegal.</p>
         </>
     )
 }

@@ -35,8 +35,8 @@ export function Select({ map, type, options, handleOption }: Props) {
                     <div className="flex h-6 w-full items-center justify-center relative">
                         <div className='absolute top-1 left-2'>
                             {options[type] !== "1" &&
-                                <IoIosRadioButtonOff size={20}
-                            />}
+                                <IoIosRadioButtonOff size={20} />
+                            }
                             {options[type] === "1" &&
                                 <IoIosRadioButtonOn size={20} />
                             }
