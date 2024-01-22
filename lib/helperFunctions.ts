@@ -86,7 +86,7 @@ export function selectMonasteries(arr: Tile[]) {
 export function selectCities(arr: Tile[]) {
     const res: Tile[] = []
     for (let i = 0; i < arr.length; i++) {
-        if (arr[i].edges.includes("city") && !arr[i].edges.includes("road")) {
+        if (arr[i].edges.includes("city")) {
             res.push(arr[i])
         }
     }

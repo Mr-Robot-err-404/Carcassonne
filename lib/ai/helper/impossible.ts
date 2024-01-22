@@ -10,6 +10,7 @@ interface Props {
 
 export function isMoveImpossible(board: Tile[][], tile: Tile, tiles: Props[]) {
     let rotate = 0
+    
     for (let i = 0; i < 4; i++) {
         const node = copy(tile)
         rotateNode(node, rotate)

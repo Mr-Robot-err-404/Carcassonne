@@ -7,15 +7,14 @@ const weight: {[key: number]: number} = {
     3: 10
 }
 
-export function pathEval(path: Square[], node: Tile): number {
+export function pathEval(path: Square[], node: Tile, end: Square, row: number, col: number): number {
     const len = path.length
 
     if (len === 1 || len > 3 || len === 0) {
         return 0
     }
-    const next = path[1]
 
-    if (!onPath(node, next)) {
+    if (!onPath(node, end, row, col)) {
         return 0
     }
 

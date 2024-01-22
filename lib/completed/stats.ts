@@ -1,18 +1,19 @@
 import { copy } from "../ai/helper/copy";
-import { findChain } from "../chains/findChain";
 import { Completed, Overview, Territory } from "../interfaces";
+
+const statsMap: {[key: string]: string} = {
+    "city": "maxCity",
+    "road": "maxRoad"
+}
 
 export function appendStats(overview: Overview, completed: Completed, map: Territory) {
     const stats: Overview = copy(overview)
-    const statsMap: {[key: string]: string} = {
-        "city": "maxCity",
-        "road": "maxRoad"
-    }
     const keys = Object.keys(completed)
 
     for (let i = 0; i < keys.length; i++) {
         const key = keys[i]
         const arr = completed[key]
+        
         for (let j = 0; j < arr.length; j++) {
             const claim = arr[j].claim
             stats[key][claim]++

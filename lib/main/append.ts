@@ -1,4 +1,4 @@
-import { Tile, Claim, Land, Chain, Territory, Completed, Score, Overview, Meeple } from "../interfaces"
+import { Tile, Claim, Territory, Completed, Score, Overview, Meeple } from "../interfaces"
 import { findEdges, oppositeEdges } from "../helperFunctions"
 import { appendCities } from "../dragons/cities"
 import { appendRoads } from "../dragons/roads"
@@ -19,13 +19,14 @@ export function appendClaims(board: Tile[][], filteredClaims: Claim, node: Tile,
         [1, 0], 
         [0, -1]
     ]
-    
+
     appendRoads(board, map, filteredClaims, roadEdges, node, row, col, dir, joinMap)
     appendCities(board, map, filteredClaims, cityEdges, node, row, col, dir, joinMap)
     appendMonasteries(board, map, row, col, node)
 
     const completed: Completed = completedChains(map, dir)
     removeBadges(completed, map)
+
     const stats = appendStats(overview, completed, map)
     const meeples = countMeeples(completed, map)
     const scores = scorePoints(completed, map, stats)

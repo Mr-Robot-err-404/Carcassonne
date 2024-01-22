@@ -25,10 +25,9 @@ export default function NavBar({ loading }: Props) {
                 <div className="md:px-10 px-5">
                     <h2 className="text-lg md:text-2xl">Carcassonne</h2>
                 </div>
-                {/* <Scoreboard/> */}
-                {/* <h2 onClick={() => console.log(JSON.stringify(board))} className="text-lg hover:text-blue-500 cursor-pointer">Board</h2> */}
+                {/* <h2 onClick={() => console.log(JSON.stringify(board))} className="text-lg hover:text-blue-500 cursor-pointer">Board</h2>
+                <h2 onClick={handleNextMove} className="text-sm md:text-lg hover:text-blue-500 cursor-pointer">Next turn</h2> */}
                 <div>
-
                     {/* <div className="flex md:space-x-10 space-x-2 px-3 md:px-6">
                         <h2 onClick={() => setStart(true)} className="text-lg hover:text-blue-500 cursor-pointer">Start</h2>
                         <BsArrowLeftCircle

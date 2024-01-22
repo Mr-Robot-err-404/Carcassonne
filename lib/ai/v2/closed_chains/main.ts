@@ -1,4 +1,3 @@
-import { isTerritoryClaimed } from "@/lib/claims/isTerritoryClaimed";
 import { Claim, Territory, Tile } from "@/lib/interfaces";
 import { cityEval } from "./city";
 import { roadEval } from "./road";

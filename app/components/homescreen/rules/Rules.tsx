@@ -10,10 +10,15 @@ import { Monastery } from "./Monastery"
 import { Contested } from "./Contested"
 import { Ready } from "./Ready"
 import { useEffect, useState } from "react"
+import { IoIosRadioButtonOff, IoIosRadioButtonOn } from "react-icons/io"
 
 interface Slide {
     title: string
     component: React.FC
+}
+
+interface Props {
+    setToggle: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const slides: Slide[] = [
@@ -55,9 +60,10 @@ const slides: Slide[] = [
     }, 
 ]
 
+const radios = new Array(9).fill(true)
 
 
-export function Rules() {
+export function Rules({setToggle}: Props) {
     const [curr, setCurr] = useState(slides[0])
     const [idx, setIdx] = useState(0)
 
@@ -89,6 +95,7 @@ export function Rules() {
                         <div className="flex items-center justify-between pt-8">
                             {idx === 0 ?
                                 <button
+                                    onClick={() => setToggle(true)}
                                     className="rounded-lg py-1 px-2 bg-blue-500 hover:bg-blue-400">Skip rules</button>
                                 : 
                                 <button
@@ -96,6 +103,24 @@ export function Rules() {
                                     className="rounded-lg py-1 px-2 bg-blue-500 hover:bg-blue-400">Back
                                 </button>
                             }
+
+                            <div className="flex justify-center space-x-1 w-60 mr-2">
+                                {radios.map((_, i) => {
+                                    return (
+                                        <div key={i}>
+                                            {i === idx ? 
+                                                <IoIosRadioButtonOn size={15} />
+                                                : 
+                                                <IoIosRadioButtonOff
+                                                    onClick={() => setIdx(i)}
+                                                    size={15}
+                                                />
+                                            } 
+                                        </div>
+                                    )
+                                })}
+                            </div>
+
                             {idx <= 7 &&
                             <button
                                 onClick={handleNext}
@@ -104,7 +129,7 @@ export function Rules() {
                             }
                             {idx >= 8 && 
                             <button
-                                onClick={handleNext}
+                                onClick={() => setToggle(true)}
                                 className="rounded-lg py-1 px-2 bg-green-500 hover:bg-green-400">Get started
                             </button>
                             }

@@ -475,6 +475,7 @@ export const tiles = [
         edges: ["city", "city", "road", "city"], 
         rotate: 0, 
         id: 70, 
+        deadEnd: true
     },
 ]
 

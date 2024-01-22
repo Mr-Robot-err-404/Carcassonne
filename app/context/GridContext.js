@@ -25,7 +25,7 @@ export function GridProvider({ children }) {
     const [board, setBoard] = useState(emptyBoard)
     const [validTiles, setValidTiles] = useState(emptyMatrix)
     
-    const [stack, setStack] = useState(shuffleStack(tiles))
+    const [stack, setStack] = useState(shuffleStack(selectCities(tiles)))
     const [claims, setClaims] = useState(new Map())
 
     const [currTile, setCurrTile] = useState(emptyTile)
@@ -64,14 +64,13 @@ export function GridProvider({ children }) {
     const [idx, setIdx] = useState(1)
     const [start, setStart] = useState(false)
 
-    const versionMap = {
-        player: aiMove, 
-        ai: aiMoveV2
-    }
-    useEffect(() => {
-        console.clear()
-        console.log(JSON.stringify(state))
-    }, [playerTurn])
+    const [aiIdx, setAiIdx] = useState(1)
+    const versionMap = [aiMove, aiMoveV2]
+
+    // useEffect(() => {
+    //     // console.clear()
+    //     console.log(JSON.stringify(state))
+    // }, [playerTurn])
 
     useEffect(() => {
         if (isClaimReady && meeples.player <= 0) {
@@ -94,18 +93,6 @@ export function GridProvider({ children }) {
             }))
         }
     }, [isGameFinished])
-
-    // useEffect(() => {
-    //     if (!state.length) {
-    //         return 
-    //     }
-    //     console.clear()
-
-    //     const map = state[idx].map
-    //     console.log("playerChains: ", map.player.chains)
-    //     console.log("aiChains: ", map.ai.chains)
-    //     console.log("score: ",state[idx].score)
-    // }, [board])
     
     // useEffect(() => {
     //     if (!state.length) {
@@ -115,42 +102,54 @@ export function GridProvider({ children }) {
     //     const map = state[idx].map
     //     const board = state[idx].board
     //     const currStack = state[idx].stack
-    //     const score = state[idx].score
     //     const node = state[idx].node
     //     const next = state[idx].next
     //     const matrix = initValidTiles(board)
     //     const curr = state[idx].meeples
-    //     updateState(map, board, currStack, node, next, matrix, score, curr)
+    //     const stats = state[idx].overview
+
+    //     updateState(map, board, currStack, node, next, matrix, curr, stats)
+
     // }, [idx])
     
-    function updateState(map, board, currStack, node, next, matrix, curr) {
+    function updateState(map, board, currStack, node, next, matrix, curr, stats) {
         setCurrTile(next)
         setRecentTile(node)
         setBoard(board)
         setStack(currStack)
-        setMeeples(curr)
+        setMeeples (curr)
         updateTerritory(map.player.territory, map.ai.territory, map.player.chains, map.ai.chains)
         setValidTiles(matrix)
+        setOverview(stats)
     }
     // ai vs player
     useEffect(() => {
-        const newState = {
-            map: copy(map), 
-            node: copy(recentTile), 
-            next: copy(currTile), 
-            board: copy(board), 
-            stack: copy(stack), 
-            turn: playerTurn,
-            score: copy(score), 
-            meeples: copy(meeples)
-        }
-        setState(prev => [...prev, newState])
+        // const newState = {
+        //     map: copy(map), 
+        //     node: copy(recentTile), 
+        //     next: copy(currTile), 
+        //     board: copy(board), 
+        //     stack: copy(stack), 
+        //     turn: playerTurn,
+        //     score: copy(score), 
+        //     meeples: copy(meeples), 
+        //     overview: copy(overview)
+        // }
+        // setState(prev => [...prev, newState])
 
         if (!playerTurn && !isGameFinished) {
+            const currAiMove = versionMap[aiIdx]
             const currMap = getMap(playerTerritory, playerChains, opponentTerritory, opponentChains)
-            const move = aiMoveV2(board, currMap, validTiles, currTile, overview, "ai", meeples.ai)
+
+            const move = currAiMove(board, currMap, validTiles, currTile, overview, "ai", meeples.ai)
             const map = move.map
             finishMove(move.row, move.col, move.node, move.claims, map.player.territory, map.ai.territory, map.player.chains, map.ai.chains, move.scores.player, move.scores.ai, map, move.stats, move.meeples)
+
+            if (move.target.acquired) {
+                const curr = [...board]
+                curr[move.target.row][move.target.col].target = true
+                setBoard(curr)
+            }
 
             if (move.claim) {
                 appendChain(move.claim.chain, map.ai.territory, move.claim.str)
@@ -251,6 +250,7 @@ export function GridProvider({ children }) {
                 const map = getMap(playerTerritory, playerChains, opponentTerritory, opponentChains)
                 const leftover = leftoverChains(map)
                 const extraScore = scorePoints(leftover, map)
+                
                 updateScore(Math.floor(extraScore.player / 2), Math.floor(extraScore.ai / 2))
                 setIsGameFinished(true)
             }
@@ -265,7 +265,8 @@ export function GridProvider({ children }) {
     const updateCell = (row, col, node, currClaims) => {
         const matrix = updateValidTiles(board, validTiles, row, col)
         const newBoard = [...board]
-        newBoard[row][col] = copy(node)
+        newBoard[row][col] = node
+        
         setBoard(newBoard)
         setValidTiles(matrix)
         setClaims(currClaims)
@@ -394,7 +395,7 @@ export function GridProvider({ children }) {
     }
 
     return (
-        <GridContext.Provider value={{state, setState, updateState, idx, setIdx, overview, board, setBoard, setStart, meeples, updateTerritory, updateCell, stack, setStack, rotateClockwise, rotateAntiClockwise, currTile, setRecentTile, validTiles, setValidTiles, setCurrTile, playerTurn, setPlayerTurn, recentTile, setRecentTile, claims, playerTerritory, setPlayerTerritory, opponentTerritory, appendChain, playerChains, opponentChains, score, updateScore, finishMove, isClaimReady, isGameFinished}}>
+        <GridContext.Provider value={{setAiIdx, state, setState, updateState, idx, setIdx, overview, board, setBoard, setStart, meeples, updateTerritory, updateCell, stack, setStack, rotateClockwise, rotateAntiClockwise, currTile, setRecentTile, validTiles, setValidTiles, setCurrTile, playerTurn, setPlayerTurn, recentTile, setRecentTile, claims, playerTerritory, setPlayerTerritory, opponentTerritory, appendChain, playerChains, opponentChains, score, updateScore, finishMove, isClaimReady, isGameFinished}}>
             {children}
         </GridContext.Provider>
     )

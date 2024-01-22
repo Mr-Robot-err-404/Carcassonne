@@ -15,6 +15,11 @@ import { bestClaim } from "../eval/claim";
 import { claimEval } from "../board_vision/claimEval";
 import { isMoveImpossible } from "../helper/impossible";
 
+interface Target {
+    acquired: boolean
+    row: number
+    col: number
+}
 export interface Move {
     row: number
     col: number
@@ -27,11 +32,18 @@ export interface Move {
     stats: Overview, 
     meeples: Meeple
     impossible?: boolean
+    target: Target
 }
 
 const enemyMap: {[key: string]: string} = {
     ai: "player", 
     player: "ai"
+}
+
+const emptyTarget: Target = {
+    acquired: false,
+    row: 0,
+    col: 0
 }
 
 export function aiMove(board: Tile[][], currMap: Territory, validTiles: boolean[][], currNode: Tile, currOverview: Overview, hero: string, heroMeeples: number) {
@@ -82,7 +94,8 @@ export function aiMove(board: Tile[][], currMap: Territory, validTiles: boolean[
                 claims: currClaims,
                 claim: claim, 
                 stats: stats, 
-                meeples: meeples
+                meeples: meeples,
+                target: emptyTarget
             }) 
         }
         rotate += 90

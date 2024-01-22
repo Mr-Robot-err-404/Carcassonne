@@ -1,5 +1,7 @@
 import { IoIosRadioButtonOff } from 'react-icons/io'
 import { IoIosRadioButtonOn } from "react-icons/io"
+import { Dropdown } from './Dropdown'
+import { useState } from 'react'
 
 interface Map {
     first: {
@@ -22,9 +24,12 @@ interface Props {
         map: string
     }
     handleOption: (option: string, str: string) => void 
+    selected: number
+    setSelected: React.Dispatch<React.SetStateAction<number>>
 }   
 
-export function Select({ map, type, options, handleOption }: Props) {
+export function Select({ map, type, options, handleOption, selected, setSelected }: Props) {
+
     return (
         <>
             <div className={`flex h-12 w-full items-center justify-center ${map.style}`}>
@@ -43,11 +48,11 @@ export function Select({ map, type, options, handleOption }: Props) {
                         </div>
                         <h2 className="text-md text-white">{map.first.title}</h2>
                     </div>
-                        <div className="h-full w-full">
-                            <p className="px-2 pb-2 py-1 text-md text-white">
-                                {map.first.text} 
-                            </p>
-                        </div>
+                    <div className="h-full w-full">
+                        <p className="px-2 pb-2 py-1 text-md text-white">
+                            {map.first.text} 
+                        </p>
+                    </div>
                 </div>
                 <div onClick={() => handleOption(type, "2")} className="flex h-auto w-60 flex-col rounded-md border-2 border-slate-400 hover:border-blue-500">
                     <div className="flex h-6 w-full items-center justify-center relative">
@@ -66,6 +71,11 @@ export function Select({ map, type, options, handleOption }: Props) {
                             {map.second.text}
                         </p>
                     </div>
+                    {type === "map" && 
+                        <div className='flex w-full justify-center items-center pb-1'>
+                            <Dropdown selected={selected} setSelected={setSelected} />
+                        </div>
+                    }
                 </div>
             </div>
         </>

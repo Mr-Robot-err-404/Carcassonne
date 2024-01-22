@@ -16,9 +16,15 @@ import { isMoveLegal } from "@/lib/main/legal"
 import { getMap } from "@/lib/territory/map"
 import Overview from "./Overview"
 import { Scoreboard } from "./Scoreboard"
+import { aiMove } from "@/lib/ai/base_version/main"
 
-export default function Home({ preset, game }: any) {
-  const { setBoard, setValidTiles, setCurrTile, stack, isGameFinished, updateTerritory, setRecentTile, setState, setStack, updateState } = useContext(GridContext)
+interface Props {
+  preset: Tile[][]
+  idx: number
+}
+
+export default function Home({ preset, idx }: Props) {
+  const { setBoard, setValidTiles, setCurrTile, stack, isGameFinished, setAiIdx, updateTerritory, setRecentTile, setState, setStack, updateState } = useContext(GridContext)
   const [loading, setLoading] = useState(true)
   const [isDragging, setIsDragging] = useState(false);
   const [currentPos, setCurrentPos] = useState({ x: 0, y: 0 });
@@ -33,16 +39,24 @@ export default function Home({ preset, game }: any) {
       // const currStack = game[1].stack
       // const node = game[1].node
       // const next = game[1].next
-      // setRecentTile(node)
+      // const meeples = game[1].meeples
+      // const stats = game[1].overview
+
       // setCurrTile(next)
-      // updateState(map, board, currStack, node, next, matrix)
+      // setRecentTile(node)
       // setState(game)
+      // updateState(map, board, currStack, node, next, matrix, meeples, stats)
+
+      if (idx === 1) {
+        setAiIdx(0)
+      }
       
       const matrix = initValidTiles(preset)
       setCurrTile(stack[stack.length - 1])
       setValidTiles(matrix)
       setBoard(preset)
       setLoading(false)
+
       const [x, y] = distanceToCenter(center, window.innerWidth)
       setCurrentPos({x: x, y: y})
       ref.current.scrollTo(x, y)  

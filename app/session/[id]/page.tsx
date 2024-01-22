@@ -1,6 +1,6 @@
-import { fetchGame, fetchPreset } from "@/lib/fetchPreset"
+import { fetch, fetchGame } from "@/lib/fetch/preset"
 import Home from "../../components/Home"
-import { parseKey, randomIndex } from "@/lib/helperFunctions"
+import { parseId } from "@/lib/fetch/parse"
 
 interface Params {
   params: {
@@ -10,12 +10,12 @@ interface Params {
 
 export default async function Main({ params }: Params) {
   const { id }  = params
-  const [aiIdx, mapIdx] = parseKey(id)
-  const idx = randomIndex(12) + 1
-  const preset = await fetchPreset(idx)
+  const [aiIdx, mapIdx, sandbox] = parseId(id)
+  
+  const preset = await fetch(mapIdx, sandbox, id)
   // const game = await fetchGame()
 
   return (
-    <Home preset={preset}/>
+    <Home preset={preset} idx={aiIdx}/>
   )
 }

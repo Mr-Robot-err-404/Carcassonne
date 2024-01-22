@@ -14,7 +14,7 @@ const map = {
             text: "May fight for contested areas and uses claims wisely. Makes for a good challenge", 
             title: "Cunning Tactician"
         }, 
-        style: ""
+        style: "border-t border-slate-400 mt-5"
     },
     mode: {
         first: {
@@ -25,7 +25,7 @@ const map = {
             text: "Fight to claim large cities and twisted roads. Imbalanced chaos at its finest", 
             title: "Sandbox"
         }, 
-        style: "border-t border-slate-400 mt-5"
+        style: ""
     }
 }
 
@@ -35,11 +35,17 @@ interface Options {
     map: string
 }
 
-export default function NewGame() {
+interface Props {
+    setToggle: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+export default function NewGame({ setToggle }: Props) {
     const [options, setOptions] = useState<Options>({
         opponent: "1", 
         map: "1"
     })
+    const [selected, setSelected] = useState(0)
+
 
     function handleOption(option: string, str: string) {
         setOptions(prev => ({
@@ -54,11 +60,16 @@ export default function NewGame() {
                 <h2 className="ml-4 text-lg text-white">Create new game</h2>
             </div>
             <div className="flex h-full w-full flex-col rounded-b-lg">
-                <Select map={map.ai} type={"opponent"} handleOption={handleOption} options={options}/>
-                <Select map={map.mode} type={"map"} handleOption={handleOption} options={options}/>
+                <Select map={map.mode} type={"map"} handleOption={handleOption} options={options} selected={selected} setSelected={setSelected}/>
+                <Select map={map.ai} type={"opponent"} handleOption={handleOption} options={options} selected={selected} setSelected={setSelected}/>
+
                 <div className="flex justify-between items-center h-14 w-full rounded-b-lg px-8 border-t mt-4">
-                    <button className="rounded-lg py-1 px-2 bg-blue-500 hover:bg-blue-400">Rules</button>
-                    <Link href={`/session/${options.opponent}-${options.map}-0`}>
+                    <button
+                        onClick={() => setToggle(false)}
+                        className="rounded-lg py-1 px-2 bg-blue-500 hover:bg-blue-400">Rules
+                    </button>
+
+                    <Link href={`/session/${options.opponent}-${options.map}-${selected}`}>
                         <button className="rounded-lg py-1 px-2 bg-green-500 hover:bg-green-400">Start</button>
                     </Link>
                 </div>

@@ -4,8 +4,10 @@ import { getWallMap } from "./wallMap";
 
 export function cityEval(map: Territory, claims: Claim, node: Tile, hero: string) {
     let currEval = 0
+
     if (node.unjoined) {
         const edges = claims.edgeIndices 
+        
         if (!edges) {
             return currEval 
         }

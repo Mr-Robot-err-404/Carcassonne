@@ -1,5 +1,6 @@
 import { Tile } from "@/lib/interfaces";
 import { Square } from "../keys";
+import { findEdges } from "@/lib/helperFunctions";
 
 const dir = [
     [-1, 0], 
@@ -8,23 +9,20 @@ const dir = [
     [0, -1]
 ]
 
-export function onPath(node: Tile, next: Square): boolean {
-    const edges = node.edges
-    
-    for (let i = 0; i < dir.length; i++) {
-        if (edges[i] !== "city") {
-            continue
-        }
-        const row = node.row as number
-        const col = node.col as number
-        const x = dir[i][1]
-        const y = dir[i][0]
+export function onPath(node: Tile, end: Square, row: number, col: number): boolean {
+    const edges = findEdges(node.edges, "city")
 
-        const curr = {
-            row: row + y, 
-            col: col + x
-        }
-        if (curr.row === next.row && curr.col === next.col) {
+    for (let i = 0; i < edges.length; i++) {
+        const idx = edges[i]
+        const x = dir[idx][1]
+        const y = dir[idx][0]
+
+        const gapX = Math.abs(end.col - col)
+        const gapY = Math.abs(end.row - row)
+        const currGapX = Math.abs(end.col - (col + x))
+        const currGapY = Math.abs(end.row - (row + y))
+
+        if (currGapX < gapX || currGapY < gapY) {
             return true
         }
     } 

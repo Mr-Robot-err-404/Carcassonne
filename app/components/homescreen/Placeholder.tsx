@@ -2,21 +2,30 @@
 
 import { RxRotateCounterClockwise } from 'react-icons/rx'
 import Image from 'next/image'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDraggable } from '@dnd-kit/core'
 import { CSS } from '@dnd-kit/utilities';
 
 export default function Placeholder() {
     const [rotate, setRotate] = useState(0)
+    const [rotateStyle, setRotateStyle] = useState("rotate-0")
     const { attributes, listeners, setNodeRef, transform } = useDraggable({
         id: "example"
     })
+
+    useEffect(() => {
+        if (rotate === 270) {
+            setRotateStyle("-rotate-90")
+            return 
+        }
+        setRotateStyle(`rotate-${rotate}`)
+    }, [rotate])
     
     const style = {
         transform: CSS.Translate.toString(transform),
     } 
-    const rotateClockwise = () => setRotate(prev => (prev + 90) % 360)
-    const rotateAntiClockwise = () => setRotate(prev => (prev + 270) % 360)
+    const rotateClockwise = () => setRotate((rotate + 90) % 360)
+    const rotateAntiClockwise = () => setRotate((rotate + 270) % 360)
 
     return (
         <div className="w-60 stack-h flex justify-center items-center rounded-r-lg border-2 border-slate-600  bg-slate-400 relative">
@@ -39,7 +48,7 @@ export default function Placeholder() {
                         {...listeners} {...attributes}
                         className={`w-20 h-20 rounded-md`}>
                         <img
-                            className={`select-none rounded-sm ${rotate === 90 ? "rotate-90" : rotate === 180 ? "rotate-180" : rotate === 270 && "-rotate-90"}`}
+                            className={`select-none rounded-sm ${rotateStyle}`}
                             src={"/cities/Adobe Scan 12 Sept 2023 (35)-1.png"}
                             alt="example"
                         />

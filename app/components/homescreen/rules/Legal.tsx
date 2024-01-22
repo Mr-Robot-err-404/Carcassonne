@@ -6,7 +6,7 @@ export function Legal() {
             <p>A move is considered legal if all its neighboring tiles have matching edges. A road must match with another road, and the same applies for fields and cities.</p>
             <div className="flex space-x-14 ml-5">
                 <div className="flex flex-col space-y-1 items-center">
-                    <h2 className="text-sm text-slate-500">legal move</h2>
+                    <h2 className="text-sm text-slate-400">legal move</h2>
                     <div className="flex h-40 w-40 bg-light-brown relative">
                         <div className="h-full flex-col">
                             <Image 
@@ -36,7 +36,7 @@ export function Legal() {
                     </div>
                 </div>
                 <div className="flex flex-col space-y-1 items-center">
-                    <h2 className="text-sm text-slate-500">illegal move</h2>
+                    <h2 className="text-sm text-slate-400">illegal move</h2>
                     <div className="flex h-40 w-40 bg-light-brown relative">
                         <div className="h-full flex-col">
                             <Image 

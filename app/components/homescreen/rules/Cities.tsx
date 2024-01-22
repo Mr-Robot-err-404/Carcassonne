@@ -46,7 +46,7 @@ export function Cities() {
                     </div>
                 </div>
             </div>
-            <p>When a city is complete, each tile is worth 2 points and the claim is returned to that player to be used again. Cities may have a shield which is worth an extra 2 points.</p>
+            <p>When a city is complete, each tile is worth 2 points, while sometimes having a shield which is worth an extra 2 points. This city scores 8 points.</p>
         </>
     )
 }
