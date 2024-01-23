@@ -10,6 +10,8 @@ const dir = [
     [0, -1]
 ]
 
+// I abandoned this method and chose a simpler solution as only very short paths were useful 
+
 export function shortestPath(board: Tile[][], end: Square, row: number, col: number, node: Tile): Square[] {
     if (end.row < 0 || end.col < 0) {
         return []

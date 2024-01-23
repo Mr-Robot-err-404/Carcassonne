@@ -67,6 +67,57 @@ export function GridProvider({ children }) {
     const [aiIdx, setAiIdx] = useState(1)
     const versionMap = [aiMove, aiMoveV2]
 
+
+    function setup(preset, matrix, idx) {
+        setBoard(preset)
+        setValidTiles(matrix)
+
+        setPlayerTerritory(emptyTerritory)
+        setOpponentTerritory(createEmptyTerritory())
+
+        setPlayerChains([])
+        setOpponentChains([])
+
+        setMeeples({
+            player: 7, 
+            ai: 7
+        })
+        setScore({
+            player: 0, 
+            ai: 0
+        })
+        setOverview(initOverview)
+        setIsGameFinished(false)
+        setState([])
+
+        setPlayerTurn(true)
+        setIsClaimReady(false)
+        setClaims(new Map())
+
+        setMap({
+            player: {
+                territory: [], 
+                chains: [], 
+            },
+            ai: {
+                territory: [], 
+                chains: [],
+            }
+        })
+        
+        if (idx === 1) {
+            setAiIdx(0)
+            return 
+        }
+        setAiIdx(1)
+    }
+
+    useEffect(() => {
+        if (stack.length) {
+            setCurrTile(stack[stack.length - 1])
+        }
+    }, [stack])
+
     // useEffect(() => {
     //     // console.clear()
     //     console.log(JSON.stringify(state))
@@ -112,16 +163,6 @@ export function GridProvider({ children }) {
 
     // }, [idx])
     
-    function updateState(map, board, currStack, node, next, matrix, curr, stats) {
-        setCurrTile(next)
-        setRecentTile(node)
-        setBoard(board)
-        setStack(currStack)
-        setMeeples (curr)
-        updateTerritory(map.player.territory, map.ai.territory, map.player.chains, map.ai.chains)
-        setValidTiles(matrix)
-        setOverview(stats)
-    }
     // ai vs player
     useEffect(() => {
         // const newState = {
@@ -137,35 +178,46 @@ export function GridProvider({ children }) {
         // }
         // setState(prev => [...prev, newState])
 
-        if (!playerTurn && !isGameFinished) {
-            const currAiMove = versionMap[aiIdx]
-            const currMap = getMap(playerTerritory, playerChains, opponentTerritory, opponentChains)
+        // if (!playerTurn && !isGameFinished) {
+        //     const currAiMove = versionMap[aiIdx]
+        //     const currMap = getMap(playerTerritory, playerChains, opponentTerritory, opponentChains)
 
-            const move = currAiMove(board, currMap, validTiles, currTile, overview, "ai", meeples.ai)
-            const map = move.map
-            finishMove(move.row, move.col, move.node, move.claims, map.player.territory, map.ai.territory, map.player.chains, map.ai.chains, move.scores.player, move.scores.ai, map, move.stats, move.meeples)
+        //     const move = currAiMove(board, currMap, validTiles, currTile, overview, "ai", meeples.ai)
+        //     const map = move.map
+        //     finishMove(move.row, move.col, move.node, move.claims, map.player.territory, map.ai.territory, map.player.chains, map.ai.chains, move.scores.player, move.scores.ai, map, move.stats, move.meeples)
 
-            if (move.target.acquired) {
-                const curr = [...board]
-                curr[move.target.row][move.target.col].target = true
-                setBoard(curr)
-            }
+        //     if (move.target.acquired) {
+        //         const curr = [...board]
+        //         curr[move.target.row][move.target.col].target = true
+        //         setBoard(curr)
+        //     }
 
-            if (move.claim) {
-                appendChain(move.claim.chain, map.ai.territory, move.claim.str)
-            }
-            else if (isClaimPossible(move.claims)) { 
-                if (stack.length <= 1) {
-                    const map = getMap(playerTerritory, playerChains, opponentTerritory, opponentChains)
-                    const leftover = leftoverChains(map)
-                    const extraScore = scorePoints(leftover, map)
-                    updateScore(Math.floor(extraScore.player / 2), Math.floor(extraScore.ai / 2))
-                    setIsGameFinished(true)
-                }
-                setPlayerTurn(prev => !prev)
-            }
-        }
+        //     if (move.claim) {
+        //         appendChain(move.claim.chain, map.ai.territory, move.claim.str)
+        //     }
+        //     else if (isClaimPossible(move.claims)) { 
+        //         if (stack.length <= 1) {
+        //             const map = getMap(playerTerritory, playerChains, opponentTerritory, opponentChains)
+        //             const leftover = leftoverChains(map)
+        //             const extraScore = scorePoints(leftover, map)
+        //             updateScore(Math.floor(extraScore.player / 2), Math.floor(extraScore.ai / 2))
+        //             setIsGameFinished(true)
+        //         }
+        //         setPlayerTurn(prev => !prev)
+        //     }
+        // }
     }, [playerTurn])
+
+    function updateState(map, board, currStack, node, next, matrix, curr, stats) {
+        setCurrTile(next)
+        setRecentTile(node)
+        setBoard(board)
+        setStack(currStack)
+        setMeeples (curr)
+        updateTerritory(map.player.territory, map.ai.territory, map.player.chains, map.ai.chains)
+        setValidTiles(matrix)
+        setOverview(stats)
+    }
 
     
     // // let the chaos commence
@@ -395,7 +447,7 @@ export function GridProvider({ children }) {
     }
 
     return (
-        <GridContext.Provider value={{setAiIdx, state, setState, updateState, idx, setIdx, overview, board, setBoard, setStart, meeples, updateTerritory, updateCell, stack, setStack, rotateClockwise, rotateAntiClockwise, currTile, setRecentTile, validTiles, setValidTiles, setCurrTile, playerTurn, setPlayerTurn, recentTile, setRecentTile, claims, playerTerritory, setPlayerTerritory, opponentTerritory, appendChain, playerChains, opponentChains, score, updateScore, finishMove, isClaimReady, isGameFinished}}>
+        <GridContext.Provider value={{setAiIdx, setup, state, setState, updateState, idx, setIdx, overview, board, setBoard, setStart, meeples, updateTerritory, updateCell, stack, setStack, rotateClockwise, rotateAntiClockwise, currTile, setRecentTile, validTiles, setValidTiles, setCurrTile, playerTurn, setPlayerTurn, recentTile, setRecentTile, claims, playerTerritory, setPlayerTerritory, opponentTerritory, appendChain, playerChains, opponentChains, score, updateScore, finishMove, isClaimReady, setIsClaimReady, isGameFinished}}>
             {children}
         </GridContext.Provider>
     )

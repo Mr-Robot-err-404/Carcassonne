@@ -32,7 +32,7 @@ export default function Badge({ str, claim, idx, spacing }: Props) {
                 </g>
                 {typeof idx === 'undefined' &&
                     <g transform="matrix(1 0 0 1 537 502)" id="e2TycuUkP9zUpwZshQcSb">
-                        <text xmlSpace="preserve" fontSize={fontSize} fontStyle="normal" fontWeight="normal" className="textStyle">
+                        <text fontFamily="Open Sans" xmlSpace="preserve" fontSize={fontSize} fontStyle="normal" fontWeight="normal" className="textStyle">
                             <tspan x="-292" y="-108.25974">{text}</tspan>
                         </text>
                     </g>

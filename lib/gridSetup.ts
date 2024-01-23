@@ -103,9 +103,8 @@ export function adjustBoard(board: Tile[][]) {
 export function adjustTile(board: Tile[][]) {
     for (let i = 0; i < board.length; i++) {
         for (let j = 0; j < board[0].length; j++) {
-            if (board[i][j].id === 2) {
-                board[i][j].unjoined = true
-                board[i][j].end = true
+            if (board[i][j].id === 70) {
+                board[i][j].deadEnd = true
             }
         }
     }

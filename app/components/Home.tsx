@@ -4,7 +4,7 @@ import { useEffect, useRef, useContext, useState, MouseEvent } from "react"
 import { DndContext } from '@dnd-kit/core'
 import Grid from "./Grid"
 import NavBar from "./NavBar"
-import { adjustBoard, adjustTile, distanceToCenter, findCenter, initValidTiles, test} from "@/lib/gridSetup"
+import { distanceToCenter, initValidTiles, adjustTile } from "@/lib/gridSetup"
 import TilePlaceholder from "./TilePlaceholder"
 import { parseKey } from "@/lib/helperFunctions"
 import GridContext from "../context/GridContext"
@@ -16,7 +16,6 @@ import { isMoveLegal } from "@/lib/main/legal"
 import { getMap } from "@/lib/territory/map"
 import Overview from "./Overview"
 import { Scoreboard } from "./Scoreboard"
-import { aiMove } from "@/lib/ai/base_version/main"
 
 interface Props {
   preset: Tile[][]
@@ -24,41 +23,27 @@ interface Props {
 }
 
 export default function Home({ preset, idx }: Props) {
-  const { setBoard, setValidTiles, setCurrTile, stack, isGameFinished, setAiIdx, updateTerritory, setRecentTile, setState, setStack, updateState } = useContext(GridContext)
+  const { isGameFinished, setup} = useContext(GridContext)
   const [loading, setLoading] = useState(true)
+
   const [isDragging, setIsDragging] = useState(false);
   const [currentPos, setCurrentPos] = useState({ x: 0, y: 0 });
   
-  const ref: any = useRef(null)
-  const center: number[] = findCenter(30, 50)
+  const [center, setCenter] = useState({x: 0, y: 0})
+  const ref: React.MutableRefObject<HTMLInputElement | null> = useRef(null);
   
   useEffect(() => {
     if (ref.current) { 
-      // const map = game[1].map
-      // const board = game[1].board
-      // const currStack = game[1].stack
-      // const node = game[1].node
-      // const next = game[1].next
-      // const meeples = game[1].meeples
-      // const stats = game[1].overview
 
-      // setCurrTile(next)
-      // setRecentTile(node)
-      // setState(game)
-      // updateState(map, board, currStack, node, next, matrix, meeples, stats)
-
-      if (idx === 1) {
-        setAiIdx(0)
-      }
-      
       const matrix = initValidTiles(preset)
-      setCurrTile(stack[stack.length - 1])
-      setValidTiles(matrix)
-      setBoard(preset)
-      setLoading(false)
+      setup(preset, matrix, idx)
 
-      const [x, y] = distanceToCenter(center, window.innerWidth)
-      setCurrentPos({x: x, y: y})
+      setLoading(false)
+      const [x, y] = distanceToCenter([15, 25], window.innerWidth)
+
+      setCenter({x: x, y: y})
+      setCurrentPos({ x: x, y: y })
+      
       ref.current.scrollTo(x, y)  
     }
   }, []) 
@@ -76,8 +61,14 @@ export default function Home({ preset, idx }: Props) {
     if (isDragging && ref.current) {
       const dx = e.clientX - currentPos.x;
       const dy = e.clientY - currentPos.y;
-      ref.current.scrollLeft -= dx;
-      ref.current.scrollTop -= dy;
+      const targetScrollLeft = ref.current.scrollLeft - dx;
+      const targetScrollTop = ref.current.scrollTop - dy;
+
+      ref.current.scrollTo({
+        left: targetScrollLeft,
+        top: targetScrollTop,
+      });
+
       setCurrentPos({ x: e.clientX, y: e.clientY });
     }
   }
@@ -85,13 +76,13 @@ export default function Home({ preset, idx }: Props) {
   return (
     <>
       <div ref={ref} onMouseDown={handleMouseDown} onMouseMove={handleMouseMove} onMouseUp={() => setIsDragging(false)} className="w-full h-screen overflow-auto hide-scrollbar relative">
-        <NavBar loading={loading} />
+        <NavBar loading={loading} center={center} currRef={ref}/>
         <Scoreboard loading={loading}/>
         <DndContext onDragEnd={(e) => handleDragEnd(e)}>
           {!loading && !isGameFinished &&
             <TilePlaceholder/>
           }
-          <Grid center={center} />
+          <Grid center={[15, 25]}/>
         </DndContext>
         {isGameFinished && <Overview/>}
       </div>

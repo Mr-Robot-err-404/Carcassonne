@@ -55,7 +55,7 @@ export function aiMove(board: Tile[][], currMap: Territory, validTiles: boolean[
     if (isMoveImpossible(board, currNode, tiles)) {
         return {impossible: true}
     }
-    
+
     for (let i = 0; i < 4; i++) {
         for (let j = 0; j < tiles.length; j++) {
             const square = tiles[j]

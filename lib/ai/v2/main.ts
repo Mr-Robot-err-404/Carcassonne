@@ -92,7 +92,7 @@ export function aiMoveV2(board: Tile[][], currMap: Territory, validTiles: boolea
                 col: 0
             }
 
-            if (insideRadius(filthySquares, square.row, square.col) && node.edges.includes("city")) {
+            if (insideRadius(filthySquares, square.row, square.col) && node.edges.includes("city") && heroMeeples > 0) {
                 const end = nearestSquare(filthySquares, square.row, square.col)
                 const int = heistEval(end, square, board, map, node, hero)
 

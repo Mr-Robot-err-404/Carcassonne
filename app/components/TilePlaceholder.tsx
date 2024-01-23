@@ -5,7 +5,7 @@ import { RxRotateCounterClockwise } from 'react-icons/rx'
 import Image from 'next/image'
 import GridContext from "../context/GridContext"
 import StackTile from './StackTile'
-
+import { BiTargetLock } from "react-icons/bi";
 
 export default function TilePlaceholder() {
     const { rotateClockwise, rotateAntiClockwise } = useContext(GridContext)
@@ -39,3 +39,4 @@ export default function TilePlaceholder() {
         </div>
     )
 }
+

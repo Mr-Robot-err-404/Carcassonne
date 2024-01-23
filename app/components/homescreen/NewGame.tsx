@@ -18,7 +18,7 @@ const map = {
     },
     mode: {
         first: {
-            text: "Only the river tiles are placed to start. Recommended way to play", 
+            text: "Only the river tiles are placed to start. The original board game is usually played in this way", 
             title: "Standard"
         }, 
         second: {

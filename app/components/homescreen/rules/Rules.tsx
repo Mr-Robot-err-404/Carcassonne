@@ -11,6 +11,7 @@ import { Contested } from "./Contested"
 import { Ready } from "./Ready"
 import { useEffect, useState } from "react"
 import { IoIosRadioButtonOff, IoIosRadioButtonOn } from "react-icons/io"
+import { Navigating } from "./Navigating"
 
 interface Slide {
     title: string
@@ -55,12 +56,16 @@ const slides: Slide[] = [
         component: Contested
     }, 
     {
+        title: "Navigating the Board", 
+        component: Navigating
+    },
+    {
         title: "The Scoreboard", 
         component: Ready
     }, 
 ]
 
-const radios = new Array(9).fill(true)
+const radios = new Array(10).fill(true)
 
 
 export function Rules({setToggle}: Props) {
@@ -72,7 +77,7 @@ export function Rules({setToggle}: Props) {
     }, [idx])
 
     function handleNext() {
-        if (idx < 8) {
+        if (idx < 9) {
             setIdx(prev => prev + 1)
         }
     }
@@ -121,16 +126,16 @@ export function Rules({setToggle}: Props) {
                                 })}
                             </div>
 
-                            {idx <= 7 &&
+                            {idx <= 8 &&
                             <button
                                 onClick={handleNext}
                                 className="rounded-lg py-1 px-2 bg-green-500 hover:bg-green-400">Next
                             </button>
                             }
-                            {idx >= 8 && 
+                            {idx >= 9 && 
                             <button
                                 onClick={() => setToggle(true)}
-                                className="rounded-lg py-1 px-2 bg-green-500 hover:bg-green-400">Get started
+                                className="rounded-lg py-1 px-1 sm:px-2 bg-green-500 hover:bg-green-400">Get started
                             </button>
                             }
                         </div>

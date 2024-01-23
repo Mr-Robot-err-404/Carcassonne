@@ -34,8 +34,8 @@ export default function StackTile() {
             <div
                 className={`flex items-center justify-center bg-light-brown w-24 h-24 rounded-lg select-none`}>
                 <div
-                    style={style}
-                    ref={playerTurn ? setNodeRef : null}
+                    style={playerTurn && !isClaimReady ? style : undefined}
+                    ref={playerTurn && !isClaimReady ? setNodeRef : null}
                     {...listeners} {...attributes}
                     className={`w-20 h-20 rounded-md z-30`}>
                     <img

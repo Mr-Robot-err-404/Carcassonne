@@ -39,7 +39,7 @@ export default function Node({ isNodeCenter, row, col, tile, isRecentTile }: Nod
     
     return (
         <div className="relative">
-            {isRecentTile && isClaimPossible(claims) && !isNodeClaimed && isClaimReady &&
+            {isRecentTile && isClaimPossible(claims) && !isNodeClaimed && isClaimReady && toggle &&
                 <ClaimPopup toggle={toggle} setToggle={setToggle} isNodeClaimed={isNodeClaimed} setIsNodeClaimed={setIsNodeClaimed} row={row} col={col}/>
             }
             <div
