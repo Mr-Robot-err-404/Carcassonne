@@ -95,7 +95,7 @@ export default function ClaimPopup({ setToggle, isNodeClaimed, setIsNodeClaimed,
             </div>
             {selected &&
             <button
-                className={`absolute z-20 -translate-y-9 translate-x-4  px-1 bg-green-500 border-2 border-transparent hover:border-slate-300 rounded-md text-sm`}
+                className={`absolute z-20 -translate-y-9 translate-x-4 px-1 text-slate-200 bg-green-500 border-2 border-transparent hover:border-slate-300 rounded-md text-sm`}
                 onClick={handleClaim}
             >
                 Claim

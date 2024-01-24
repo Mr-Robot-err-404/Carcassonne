@@ -1,10 +1,7 @@
 'use client'
 
-import { useContext, useState } from "react"
+import { useContext } from "react"
 import GridContext from "../context/GridContext"
-import Scoreboard from "./Score"
-import { BsArrowLeftCircle, BsArrowRightCircle } from 'react-icons/bs'
-import { Meeples } from "./Meeples"
 import { BiTargetLock } from "react-icons/bi"
 
 interface Props {
@@ -18,12 +15,7 @@ interface Props {
 
 export default function NavBar({ loading, center, currRef }: Props) {
     const { playerTurn, setPlayerTurn, isClaimReady, setIsClaimReady } = useContext(GridContext)
-    const [hover, setHover] = useState(0)
-
-    const handleNextMove = () => {
-        setPlayerTurn(!playerTurn)
-    }
-
+    
     function pass() {
         setIsClaimReady(false)
         setPlayerTurn(false)
@@ -44,7 +36,7 @@ export default function NavBar({ loading, center, currRef }: Props) {
                 </div> 
                 {playerTurn && isClaimReady &&
                 <div onClick={pass} className="absolute left-72 mt-1">
-                    <button className="px-3 py-1 border border-slate-500 rounded-sm text-md hover:border-slate-300">Pass</button>
+                    <button className="px-3 py-1 border border-slate-500 rounded-sm text-md hover:border-slate-300 text-slate-200">Pass</button>
                 </div>}
             </div>
         </div>

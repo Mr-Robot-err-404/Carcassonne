@@ -12,29 +12,32 @@ export default function Grid({ center }: { center: number[]}) {
 
     return (
         <>
-            <div className="grid-dimensions relative select-none">
+            <div className="grid-dimensions relative select-none bg-slate-800">
                 <Image
                     className="absolute top-0 left-0 select-none"
                     alt=""
-                    src="/wood-textures/simon-berger-JH_R66BihvA-unsplash.jpg"
+                    src="/background.jpg"
                     quality={100}
                     width={4000}
                     height={2000}
                     style={{
                         objectFit: 'cover',
                     }}
+                    priority={true}
                 />
                 {board.map((curr: Tile[], i: number) => {
                     return (
                     <div key={i} className='flex w-full h-20'>
+                        
                         {board[i].map((tile: Tile, j: number) => {
                             const isNodeCenter = isCenter(i, j, center) 
                             const isRecentTile = tile === recentTile
+
                             return <Node row={i} col={j} tile={tile} isNodeCenter={isNodeCenter} isRecentTile={isRecentTile} key={`${i}-${j}`}/>
                         })}
                     </div>) 
                 })}
-            </div>
+            </div> 
         </>
     )
 }

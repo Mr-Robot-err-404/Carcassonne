@@ -67,7 +67,7 @@ export default function Overview() {
                 </div>
                 <div className="flex justify-end items-center h-14 w-full bg-slate-700 rounded-b-lg px-8">
                     <Link href={"/"}>
-                        <button className="rounded-lg py-1 px-2 bg-blue-500 hover:bg-blue-400">Home</button>
+                        <button className="rounded-lg py-1 px-2 bg-blue-500 hover:bg-blue-400 text-slate-200">Home</button>
                     </Link>
                 </div>
             </div>
