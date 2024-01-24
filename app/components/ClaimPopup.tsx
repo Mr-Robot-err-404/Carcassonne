@@ -1,4 +1,5 @@
 'use client'
+
 import ClaimOption from './ClaimOption'
 import { useContext, useState } from 'react'
 import GridContext from '../context/GridContext'
@@ -7,15 +8,14 @@ import { copy } from '@/lib/ai/helper/copy'
 import { claimFunction } from '@/lib/territory/claimMap'
 
 interface Props {
-    toggle: boolean,
-    setToggle: any,
+    setToggle: React.Dispatch<React.SetStateAction<boolean>>,
     isNodeClaimed: boolean, 
-    setIsNodeClaimed: any
+    setIsNodeClaimed: React.Dispatch<React.SetStateAction<boolean>>
     row: number,
     col: number
 }
 
-export default function ClaimPopup({ toggle, setToggle, isNodeClaimed, setIsNodeClaimed, row, col }: Props) {
+export default function ClaimPopup({ setToggle, isNodeClaimed, setIsNodeClaimed, row, col }: Props) {
     const [selected, setSelected] = useState<string>("")
     const [dir, setDir] = useState<string>("")
     const { claims, recentTile, board, playerTerritory, opponentTerritory, appendChain, playerTurn } = useContext(GridContext)
@@ -46,8 +46,8 @@ export default function ClaimPopup({ toggle, setToggle, isNodeClaimed, setIsNode
     }
    
     return (
-        <div className={`transition-opacity ${!toggle ? "opacity-0" : "opacity-100 duration-300"}`}>
-            <div className="absolute z-10 inline-block w-40 h-24 bg-gray-800 rounded-md popover-y-container -translate-x-10">
+        <div>
+            <div className="absolute z-20 inline-block w-40 h-24 bg-gray-800 rounded-md popover-y-container -translate-x-10">
                 <div className="flex flex-col space-y-1 py-2">
                     {arr.map((key: string) => {
                         if (key === "edgeIndices") {
@@ -95,7 +95,7 @@ export default function ClaimPopup({ toggle, setToggle, isNodeClaimed, setIsNode
             </div>
             {selected &&
             <button
-                className={`absolute z-10 -translate-y-9 translate-x-4  px-1 bg-green-500 border-2 border-transparent hover:border-slate-300 rounded-md text-sm`}
+                className={`absolute z-20 -translate-y-9 translate-x-4  px-1 bg-green-500 border-2 border-transparent hover:border-slate-300 rounded-md text-sm`}
                 onClick={handleClaim}
             >
                 Claim

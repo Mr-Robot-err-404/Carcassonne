@@ -5,13 +5,12 @@ import { RxRotateCounterClockwise } from 'react-icons/rx'
 import Image from 'next/image'
 import GridContext from "../context/GridContext"
 import StackTile from './StackTile'
-import { BiTargetLock } from "react-icons/bi";
 
 export default function TilePlaceholder() {
     const { rotateClockwise, rotateAntiClockwise } = useContext(GridContext)
    
     return (
-        <div className="fixed top-16 left-0 w-60 stack-h flex justify-center items-center rounded-r-lg border-2 border-slate-600  bg-slate-400 z-20">
+        <div className="fixed top-16 left-0 w-60 stack-h flex justify-center items-center rounded-r-lg border-2 border-slate-600  bg-slate-400 z-30">
             <Image
                 className="absolute top-0 left-0 select-none rounded-r-lg"
                 alt=""

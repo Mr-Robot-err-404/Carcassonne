@@ -20,27 +20,30 @@ interface NodeProps {
     isRecentTile?: boolean
 }
 
+const rotateMap: {[key: number]: string} = {
+    0: "rotate-0",
+    90: "rotate-90", 
+    180: "rotate-180", 
+    270: "-rotate-90", 
+}
+
 export default function Node({ isNodeCenter, row, col, tile, isRecentTile }: NodeProps) {
     const [toggle, setToggle] = useState(false)
     const [isNodeClaimed, setIsNodeClaimed] = useState(false)
     const { validTiles, playerTurn, playerTerritory, opponentTerritory, claims, isClaimReady } = useContext(GridContext)
-
-    if (row === 15 && col === 29) {
-        if (!opponentTerritory[row][col].node.empty) {
-            console.log(opponentTerritory[row][col])
-        }
-    }
-    
+   
     const {isOver, setNodeRef} = useDroppable({
         id: `${row}-${col}`,
     })
     const currBadge = isBadgeActive(playerTerritory, opponentTerritory, row, col)
     const isValid = isBadgeValid(currBadge)
+
+    const rotateStyle = rotateMap[tile.rotate]
     
     return (
         <div className="relative">
             {isRecentTile && isClaimPossible(claims) && !isNodeClaimed && isClaimReady && toggle &&
-                <ClaimPopup toggle={toggle} setToggle={setToggle} isNodeClaimed={isNodeClaimed} setIsNodeClaimed={setIsNodeClaimed} row={row} col={col}/>
+                <ClaimPopup setToggle={setToggle} isNodeClaimed={isNodeClaimed} setIsNodeClaimed={setIsNodeClaimed} row={row} col={col}/>
             }
             <div
             onClick={() => setToggle(!toggle)}
@@ -48,7 +51,7 @@ export default function Node({ isNodeCenter, row, col, tile, isRecentTile }: Nod
             className={`h-full bg-transparent w-20 hover:border hover:border-transparent ${isRecentTile && isClaimPossible(claims) && !isNodeClaimed && isClaimReady && 'border-4 border-yellow-500'} ${isOver ? "border-green-500 border-2" : ""} flex-shrink-0`}>
             {tile.img && 
                 <Image
-                    className={`select-none ${tile.rotate === 90 ? "rotate-90" : tile.rotate === 180 ? "rotate-180" : tile.rotate === 270 && "-rotate-90"} rounded-sm`}
+                    className={`select-none ${rotateStyle} rounded-sm`}
                     src={tile.img}
                     width={80}
                     height={80}

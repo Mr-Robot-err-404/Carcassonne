@@ -2,10 +2,12 @@
 
 import { useContext } from "react"
 import GridContext from "../context/GridContext"
+import Link from "next/link"
 
 export default function Overview() {
     const { overview } = useContext(GridContext)
     const keys = Object.keys(overview.player)
+    
     const strMap: {[key: string]: string} = {
         finalScore: "final score",
         city: "cities completed",
@@ -63,9 +65,10 @@ export default function Overview() {
                         </div>
                     </div>
                 </div>
-                <div className="flex justify-between items-center h-14 w-full bg-slate-700 rounded-b-lg px-8">
-                    <button className="rounded-lg py-1 px-2 bg-blue-500 hover:bg-blue-400">Play again</button>
-                    <button className="rounded-lg py-1 px-2 bg-green-500 hover:bg-green-400">Done</button>
+                <div className="flex justify-end items-center h-14 w-full bg-slate-700 rounded-b-lg px-8">
+                    <Link href={"/"}>
+                        <button className="rounded-lg py-1 px-2 bg-blue-500 hover:bg-blue-400">Home</button>
+                    </Link>
                 </div>
             </div>
     )

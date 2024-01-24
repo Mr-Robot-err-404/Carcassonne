@@ -12,7 +12,7 @@ export function Scoreboard({ loading }: Props) {
     const { meeples, score } = useContext(GridContext)
 
     return (
-        <div className="fixed top-7 right-0 z-50">
+        <div className="fixed top-7 right-0 z-40">
             <div className="relative">
                 <div className="flex h-44 w-80 flex-col rounded-l-lg bg-slate-800">
                     <div className="flex h-10 w-full items-center justify-between border-b border-slate-400">
