@@ -52,7 +52,7 @@ export default function Overview() {
                     </div>
                     <div className="flex h-auto w-28 flex-col rounded-r-lg">
                         <div className="flex h-10 w-full items-center justify-center bg-slate-700 rounded-tr-lg">
-                            <h2 className="text-md text-white">Avg Joe</h2>
+                            <h2 className="text-md text-white">Ai</h2>
                         </div>
                         <div className="flex h-full w-full flex-col space-y-1 rounded-r-lg py-2">
                             {keys.map((key: string) => {
