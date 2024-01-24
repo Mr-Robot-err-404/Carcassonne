@@ -14,6 +14,7 @@ export function Roads() {
                             width={80}
                             height={80}
                             alt="Tile"
+                            priority={true}
                         />
                     </div>
                     <div className="absolute left-20 bottom-0">
@@ -23,6 +24,7 @@ export function Roads() {
                             width={80}
                             height={80}
                             alt="Tile"
+                            priority={true}
                         />
                     </div>
                     <div className="absolute right-0 bottom-0">
@@ -32,6 +34,7 @@ export function Roads() {
                             width={80}
                             height={80}
                             alt="Tile"
+                            priority={true}
                         />
                         <Badge str="player" claim="road"/>
                     </div>
@@ -42,6 +45,7 @@ export function Roads() {
                             width={80}
                             height={80}
                             alt="Tile"
+                            priority={true}
                         />
                     </div>
                 </div>

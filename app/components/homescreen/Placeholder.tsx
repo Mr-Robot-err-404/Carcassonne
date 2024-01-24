@@ -39,6 +39,7 @@ export default function Placeholder() {
                 style={{
                     objectFit: 'contain',
                 }}
+                priority={true}
             />
             <div className='absolute mx-auto left-0 right-0 z-10 w-20 h-20 bg-light-brown mb-3'>
                 <div className={`flex items-center justify-center bg-light-brown w-24 h-24 rounded-lg select-none`}>

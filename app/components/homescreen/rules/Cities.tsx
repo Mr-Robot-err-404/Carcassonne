@@ -14,6 +14,7 @@ export function Cities() {
                             width={80}
                             height={80}
                             alt="Tile"
+                            priority={true}
                         />
                     </div>
                     <div className="absolute top-0 right-0">
@@ -23,6 +24,7 @@ export function Cities() {
                             width={80}
                             height={80}
                             alt="Tile"
+                            priority={true}
                         />
                         <Badge str="player" claim="city"/>
                     </div>
@@ -33,6 +35,7 @@ export function Cities() {
                             width={80}
                             height={80}
                             alt="Tile"
+                            priority={true}
                         />
                     </div>
                     <div className="absolute top-0 right-20">
@@ -42,6 +45,7 @@ export function Cities() {
                             width={80}
                             height={80}
                             alt="Tile"
+                            priority={true}
                         />
                     </div>
                 </div>

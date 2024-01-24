@@ -37,7 +37,7 @@ export function Dropdown({ selected, setSelected }: Props) {
                 onClick={() => setToggle(!toggle)}
                 className="flex px-1 mb-1 items-center space-x-1 border hover:border-slate-300 border-slate-500 rounded-sm">
                     <h2 className={`text-md text-white`}>{options[selected].text}</h2>
-                    <RiArrowDropDownLine size={20}/>
+                    <RiArrowDropDownLine size={20} color={"#f1f5f9"}/>
             </div>
             {toggle &&
             <div className="absolute inline-block h-auto w-32 translate-y-24 rounded-md bg-slate-600 z-20">

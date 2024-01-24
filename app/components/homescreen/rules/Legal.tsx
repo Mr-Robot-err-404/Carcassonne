@@ -15,6 +15,7 @@ export function Legal() {
                                 width={80}
                                 height={80}
                                 alt="Tile"
+                                priority={true}
                             />
                             <Image 
                                 className="select-none rounded-sm -rotate-90"
@@ -22,6 +23,7 @@ export function Legal() {
                                 width={80}
                                 height={80}
                                 alt="Tile"
+                                priority={true}
                             />
                         </div>
                         <div className="absolute bottom-0 right-0 mb-xs">
@@ -31,6 +33,7 @@ export function Legal() {
                                 width={80}
                                 height={80}
                                 alt="Tile"
+                                priority={true}
                             />
                         </div>
                     </div>
@@ -45,6 +48,7 @@ export function Legal() {
                                 width={80}
                                 height={80}
                                 alt="Tile"
+                                priority={true}
                             />
                             <Image 
                                 className="select-none rounded-sm rotate-180"
@@ -52,6 +56,7 @@ export function Legal() {
                                 width={80}
                                 height={80}
                                 alt="Tile"
+                                priority={true}
                             />
                         </div>
                         <div className="absolute bottom-0 right-0 mb-xs">
@@ -61,6 +66,7 @@ export function Legal() {
                                 width={80}
                                 height={80}
                                 alt="Tile"
+                                priority={true}
                             />
                         </div>
                     </div>

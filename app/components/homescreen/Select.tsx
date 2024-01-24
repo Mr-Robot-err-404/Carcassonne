@@ -40,10 +40,10 @@ export function Select({ map, type, options, handleOption, selected, setSelected
                     <div className="flex h-6 w-full items-center justify-center relative">
                         <div className='absolute top-1 left-2'>
                             {options[type] !== "1" &&
-                                <IoIosRadioButtonOff size={20} />
+                                <IoIosRadioButtonOff size={20} color={"#f1f5f9"} />
                             }
                             {options[type] === "1" &&
-                                <IoIosRadioButtonOn size={20} />
+                                <IoIosRadioButtonOn size={20} color={"#f1f5f9"} />
                             }
                         </div>
                         <h2 className="text-md text-white">{map.first.title}</h2>
@@ -58,10 +58,10 @@ export function Select({ map, type, options, handleOption, selected, setSelected
                     <div className="flex h-6 w-full items-center justify-center relative">
                         <div className='absolute top-1 left-2'>
                             {options[type] !== "2" &&
-                                <IoIosRadioButtonOff size={20}
+                                <IoIosRadioButtonOff size={20} color={"#f1f5f9"}
                             />}
                             {options[type] === "2" &&
-                                <IoIosRadioButtonOn size={20} />
+                                <IoIosRadioButtonOn size={20} color={"#f1f5f9"}/>
                             }
                         </div>
                         <h2 className="text-md text-white">{map.second.title}</h2>

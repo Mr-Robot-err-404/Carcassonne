@@ -14,6 +14,7 @@ export function Contested() {
                             width={80}
                             height={80}
                             alt="Tile"
+                            priority={true}
                         />
                     </div>
                     <div className="absolute top-0 left-0">
@@ -23,6 +24,7 @@ export function Contested() {
                             width={80}
                             height={80}
                             alt="Tile"
+                            priority={true}
                         />
                     </div>
                     <div className="absolute top-0 right-0">
@@ -32,6 +34,7 @@ export function Contested() {
                             width={80}
                             height={80}
                             alt="Tile"
+                            priority={true}
                         />
                         <Badge str="player" claim="city"/>
                     </div>
@@ -42,6 +45,7 @@ export function Contested() {
                             width={80}
                             height={80}
                             alt="Tile"
+                            priority={true}
                         />
                         <Badge str="ai" claim="city"/>
                     </div>
@@ -52,6 +56,7 @@ export function Contested() {
                             width={80}
                             height={80}
                             alt="Tile"
+                            priority={true}
                         />
                     </div>
                 </div>
@@ -63,6 +68,7 @@ export function Contested() {
                             width={80}
                             height={80}
                             alt="Tile"
+                            priority={true}
                         />
                     </div>
                     <div className="absolute top-0 left-0">
@@ -72,6 +78,7 @@ export function Contested() {
                             width={80}
                             height={80}
                             alt="Tile"
+                            priority={true}
                         />
                     </div>
                     <div className="absolute top-0 right-0">
@@ -81,6 +88,7 @@ export function Contested() {
                             width={80}
                             height={80}
                             alt="Tile"
+                            priority={true}
                         />
                         <Badge str="player" claim="city"/>
                     </div>
@@ -91,6 +99,7 @@ export function Contested() {
                             width={80}
                             height={80}
                             alt="Tile"
+                            priority={true}
                         />
                         <Badge str="ai" claim="city"/>
                     </div>
@@ -101,6 +110,7 @@ export function Contested() {
                             width={80}
                             height={80}
                             alt="Tile"
+                            priority={true}
                         />
                     </div>
                     <div className="absolute top-20 right-0">
@@ -110,6 +120,7 @@ export function Contested() {
                             width={80}
                             height={80}
                             alt="Tile"
+                            priority={true}
                         />
                     </div>
                 </div>

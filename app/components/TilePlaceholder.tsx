@@ -28,10 +28,10 @@ export default function TilePlaceholder() {
             <div className="absolute ml-40">
                 <div className='flex flex-col space-y-2'>
                     <div onClick={rotateClockwise} className="flex justify-center items-center scale-x-[-1] hover:bg-slate-400 rounded-full cursor-pointer w-10 h-10">
-                        <RxRotateCounterClockwise className="ml-1" size={23}/>
+                        <RxRotateCounterClockwise className="ml-1" size={23} color={"#f1f5f9"} />
                     </div>
                     <div onClick={rotateAntiClockwise} className="flex justify-center items-center hover:bg-slate-400 rounded-full cursor-pointer w-10 h-10">
-                        <RxRotateCounterClockwise className="ml-1" size={23}/>
+                        <RxRotateCounterClockwise className="ml-1" size={23} color={"#f1f5f9"}/>
                     </div>
                 </div>
             </div>

@@ -13,6 +13,7 @@ export function Intro() {
                             width={80}
                             height={80}
                             alt="Tile"
+                            priority={true}
                         />
                     </div>
                     <p className="text-sm text-slate-400">Tile with a city</p>
@@ -25,6 +26,7 @@ export function Intro() {
                             width={80}
                             height={80}
                             alt="Tile"
+                            priority={true}
                         />
                     </div>
                     <p className="text-sm text-slate-400">Tile with a road</p>
@@ -37,6 +39,7 @@ export function Intro() {
                             width={80}
                             height={80}
                             alt="Tile"
+                            priority={true}
                         />
                     </div>
                     <p className="text-sm text-slate-400">Tile with a monastery</p>

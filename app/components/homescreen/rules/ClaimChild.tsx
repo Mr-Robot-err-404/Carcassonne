@@ -33,6 +33,7 @@ export function ClaimChild() {
                                 width={80}
                                 height={80}
                                 alt="Tile"
+                                priority={true}
                             />
                         </div>
                         <div className="absolute bottom-0 right-20 mb-xs">
@@ -48,6 +49,7 @@ export function ClaimChild() {
                                     width={80}
                                     height={80}
                                     alt="Tile"
+                                    priority={true}
                                 />
                                 {claim &&
                                     <Badge str="player" claim={claim} />
@@ -61,6 +63,7 @@ export function ClaimChild() {
                                 width={80}
                                 height={80}
                                 alt="Tile"
+                                priority={true}
                             />
                         </div>
                     </div>

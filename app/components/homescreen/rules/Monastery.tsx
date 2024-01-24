@@ -14,6 +14,7 @@ export function Monastery() {
                             width={80}
                             height={80}
                             alt="Tile"
+                            priority={true}
                         />
                         <Badge str="player" claim="monastery"/>
                     </div>
@@ -24,6 +25,7 @@ export function Monastery() {
                             width={80}
                             height={80}
                             alt="Tile"
+                            priority={true}
                         />
                     </div>
                     <div className="absolute left-0 bottom-0">
@@ -33,6 +35,7 @@ export function Monastery() {
                             width={80}
                             height={80}
                             alt="Tile"
+                            priority={true}
                         />
                     </div>
                     <div className="absolute left-0 top-20">
@@ -42,6 +45,7 @@ export function Monastery() {
                             width={80}
                             height={80}
                             alt="Tile"
+                            priority={true}
                         />
                     </div>
                     <div className="absolute top-20 right-0">
@@ -51,6 +55,7 @@ export function Monastery() {
                             width={80}
                             height={80}
                             alt="Tile"
+                            priority={true}
                         />
                     </div>
                     <div className="absolute bottom-0 left-20">
@@ -60,6 +65,7 @@ export function Monastery() {
                             width={80}
                             height={80}
                             alt="Tile"
+                            priority={true}
                         />
                     </div>
                     <div className="absolute bottom-0 right-0">
@@ -69,6 +75,7 @@ export function Monastery() {
                             width={80}
                             height={80}
                             alt="Tile"
+                            priority={true}
                         />
                     </div>
                     <div className="absolute top-0 left-20">
@@ -78,6 +85,7 @@ export function Monastery() {
                             width={80}
                             height={80}
                             alt="Tile"
+                            priority={true}
                         />
                     </div>
                     <div className="absolute top-0 right-0 mt-xs">
@@ -87,6 +95,7 @@ export function Monastery() {
                             width={80}
                             height={80}
                             alt="Tile"
+                            priority={true}
                         />
                     </div>
                 </div>

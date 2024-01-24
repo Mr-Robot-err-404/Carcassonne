@@ -66,11 +66,11 @@ export default function NewGame({ setToggle }: Props) {
                 <div className="flex justify-between items-center h-14 w-full rounded-b-lg px-8 border-t mt-4">
                     <button
                         onClick={() => setToggle(false)}
-                        className="rounded-lg py-1 px-2 bg-blue-500 hover:bg-blue-400">Rules
+                        className="rounded-lg py-1 px-2 bg-blue-500 hover:bg-blue-400 text-slate-200">Rules
                     </button>
 
                     <Link href={`/session/${options.opponent}-${options.map}-${selected}`}>
-                        <button className="rounded-lg py-1 px-2 bg-green-500 hover:bg-green-400">Start</button>
+                        <button className="rounded-lg py-1 px-2 bg-green-500 hover:bg-green-400 text-slate-200">Start</button>
                     </Link>
                 </div>
             </div> 

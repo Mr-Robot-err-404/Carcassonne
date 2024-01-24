@@ -101,11 +101,11 @@ export function Rules({setToggle}: Props) {
                             {idx === 0 ?
                                 <button
                                     onClick={() => setToggle(true)}
-                                    className="rounded-lg py-1 px-2 bg-blue-500 hover:bg-blue-400">Skip rules</button>
+                                    className="rounded-lg py-1 px-2 bg-blue-500 hover:bg-blue-400 text-slate-200">Skip rules</button>
                                 : 
                                 <button
                                     onClick={handleBack}
-                                    className="rounded-lg py-1 px-2 bg-blue-500 hover:bg-blue-400">Back
+                                    className="rounded-lg py-1 px-2 bg-blue-500 hover:bg-blue-400 text-slate-200">Back
                                 </button>
                             }
 
@@ -114,11 +114,12 @@ export function Rules({setToggle}: Props) {
                                     return (
                                         <div key={i}>
                                             {i === idx ? 
-                                                <IoIosRadioButtonOn size={15} />
+                                                <IoIosRadioButtonOn size={15} color={"#f1f5f9"} />
                                                 : 
                                                 <IoIosRadioButtonOff
                                                     onClick={() => setIdx(i)}
                                                     size={15}
+                                                    color={"#f1f5f9"}
                                                 />
                                             } 
                                         </div>
@@ -129,13 +130,13 @@ export function Rules({setToggle}: Props) {
                             {idx <= 8 &&
                             <button
                                 onClick={handleNext}
-                                className="rounded-lg py-1 px-2 bg-green-500 hover:bg-green-400">Next
+                                className="rounded-lg py-1 px-2 bg-green-500 hover:bg-green-400 text-slate-200">Next
                             </button>
                             }
                             {idx >= 9 && 
                             <button
                                 onClick={() => setToggle(true)}
-                                className="rounded-lg py-1 px-1 sm:px-2 bg-green-500 hover:bg-green-400">Get started
+                                className="rounded-lg py-1 px-1 sm:px-2 bg-green-500 hover:bg-green-400 text-slate-200">Get started
                             </button>
                             }
                         </div>

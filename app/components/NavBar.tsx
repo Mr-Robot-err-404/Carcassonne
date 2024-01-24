@@ -33,7 +33,7 @@ export default function NavBar({ loading, center, currRef }: Props) {
         <div className="flex w-full h-16 bg-slate-800 sticky top-0 left-0 z-10 select-none">
             <div className="flex w-full items-center relative">
                 <div className="md:px-10 px-5">
-                    <h2 className="text-lg md:text-2xl">Carcassonne</h2>
+                    <h2 className="text-lg md:text-2xl text-white">Carcassonne</h2>
                 </div>
                 <div className="absolute left-52 mt-1">
                     <div
