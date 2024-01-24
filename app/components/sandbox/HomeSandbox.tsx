@@ -3,8 +3,7 @@
 import { useEffect, useRef, useContext, useState, MouseEvent } from "react"
 import { DndContext } from '@dnd-kit/core'
 import Grid from "../Grid"
-import NavBar from "../NavBar"
-import { adjustBoard, adjustTile, distanceToCenter, findCenter, initValidTiles, test} from "@/lib/gridSetup"
+import { distanceToCenter, findCenter, initValidTiles} from "@/lib/gridSetup"
 import { parseKey } from "@/lib/helperFunctions"
 import GridContext from "@/app/context/GridContext"
 import { possibleClaims } from "@/lib/claims/possibleClaims"
@@ -13,12 +12,12 @@ import { appendClaims } from "@/lib/main/append"
 import { filterClaims } from "@/lib/main/filter"
 import { isMoveLegal } from "@/lib/main/legal"
 import { getMap } from "@/lib/territory/map"
-import { Scoreboard } from "../Scoreboard"
 import Overview from "../Overview"
 import Placeholder from "./Placeholder"
-import { tiles } from "@/lib/nodes"
 
-export default function HomeSandbox({ preset, game }: any) {
+//This is only used for building the sandbox maps
+
+export default function HomeSandbox({ preset }: any) {
   const { setBoard, setValidTiles, setCurrTile, stack, isGameFinished, updateTerritory, setRecentTile, setState, setStack, updateState } = useContext(GridContext)
   const [loading, setLoading] = useState(true)
   const [isDragging, setIsDragging] = useState(false);
@@ -87,7 +86,6 @@ export default function HomeSandbox({ preset, game }: any) {
   return (
     <>
       <div ref={ref} onMouseDown={handleMouseDown} onMouseMove={handleMouseMove} onMouseUp={() => setIsDragging(false)} className="w-full h-screen overflow-auto hide-scrollbar relative">
-        <NavBar loading={loading} />
         <DndContext onDragEnd={(e) => handleDragEnd(e)}>
           {!loading && !isGameFinished &&
             <>
