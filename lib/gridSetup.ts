@@ -1,3 +1,4 @@
+import { copy } from "./ai/helper/copy"
 import { updateSingleTile } from "./inGameFunctions"
 import { Land, Tile } from "./interfaces"
 
@@ -20,6 +21,15 @@ export function distanceToCenter(center: number[], width: number) {
     else x = center[1] * 53
 
     return [x, y]
+}
+
+export function preloadImages(stack: Tile[]) {
+    
+    for (let i = stack.length - 1; i >= 0; i--) {
+        const tile = stack[i]
+        const img = new Image()
+        img.src = tile.img
+    }
 }
 
 export function initValidTiles(board: Tile[][]) {

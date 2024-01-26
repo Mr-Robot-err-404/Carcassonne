@@ -39,10 +39,6 @@ export default function Node({ isNodeCenter, row, col, tile, isRecentTile }: Nod
     const isValid = isBadgeValid(currBadge)
 
     const rotateStyle = rotateMap[tile.rotate]
-
-    if (isRecentTile) {
-        console.log(tile)
-    }
      
     return (
         <div className="relative">
@@ -60,6 +56,7 @@ export default function Node({ isNodeCenter, row, col, tile, isRecentTile }: Nod
                     width={80}
                     height={80}
                     alt="Tile" 
+                    priority={isRecentTile}
                 />
             }
             {isValid &&

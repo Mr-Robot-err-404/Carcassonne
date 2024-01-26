@@ -1,5 +1,5 @@
 import { tiles, emptyTile } from "@/lib/nodes";
-import { createEmptyBoard, createEmptyMatrix, createEmptyTerritory, shuffleStack } from "@/lib/gridSetup";
+import { createEmptyBoard, createEmptyMatrix, createEmptyTerritory, preloadImages, shuffleStack } from "@/lib/gridSetup";
 import { createContext, useEffect, useState } from "react";
 import { updateValidTiles, initOverview } from "@/lib/inGameFunctions"
 import { selectCities, selectMonasteries, selectRoads } from "@/lib/helperFunctions";
@@ -51,6 +51,12 @@ export function GridProvider({ children }) {
 
     const [aiIdx, setAiIdx] = useState(1)
     const versionMap = [aiMove, aiMoveV2]
+
+    useEffect(() => {
+        if (stack.length === 56) {
+            preloadImages(stack)
+        }
+    }, [stack])
 
     function setup(preset, matrix, idx) {
         setBoard(preset)
