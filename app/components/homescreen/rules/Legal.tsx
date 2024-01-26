@@ -11,7 +11,7 @@ export function Legal() {
                         <div className="h-full flex-col">
                             <Image 
                                 className="select-none rounded-sm"
-                                src={"/roads/Adobe Scan 12 Sept 2023 (17)-1.png"}
+                                src={"/roads/Adobe Scan 12 Sept 2023 (17)-1.jpg"}
                                 width={80}
                                 height={80}
                                 alt="Tile"
@@ -19,7 +19,7 @@ export function Legal() {
                             />
                             <Image 
                                 className="select-none rounded-sm -rotate-90"
-                                src={"/cities/Adobe Scan 12 Sept 2023 (12)-1.png"}
+                                src={"/cities/Adobe Scan 12 Sept 2023 (12)-1.jpg"}
                                 width={80}
                                 height={80}
                                 alt="Tile"
@@ -29,7 +29,7 @@ export function Legal() {
                         <div className="absolute bottom-0 right-0 mb-xs">
                             <Image 
                                 className="select-none rounded-sm"
-                                src={"/roads/Adobe Scan 12 Sept 2023 (48)-1.png"}
+                                src={"/roads/Adobe Scan 12 Sept 2023 (48)-1.jpg"}
                                 width={80}
                                 height={80}
                                 alt="Tile"
@@ -44,7 +44,7 @@ export function Legal() {
                         <div className="h-full flex-col">
                             <Image 
                                 className="select-none rounded-sm"
-                                src={"/roads/Adobe Scan 12 Sept 2023 (17)-1.png"}
+                                src={"/roads/Adobe Scan 12 Sept 2023 (17)-1.jpg"}
                                 width={80}
                                 height={80}
                                 alt="Tile"
@@ -52,7 +52,7 @@ export function Legal() {
                             />
                             <Image 
                                 className="select-none rounded-sm rotate-180"
-                                src={"/cities/Adobe Scan 12 Sept 2023 (12)-1.png"}
+                                src={"/cities/Adobe Scan 12 Sept 2023 (12)-1.jpg"}
                                 width={80}
                                 height={80}
                                 alt="Tile"
@@ -62,7 +62,7 @@ export function Legal() {
                         <div className="absolute bottom-0 right-0 mb-xs">
                             <Image 
                                 className="select-none rounded-sm"
-                                src={"/roads/Adobe Scan 12 Sept 2023 (48)-1.png"}
+                                src={"/roads/Adobe Scan 12 Sept 2023 (48)-1.jpg"}
                                 width={80}
                                 height={80}
                                 alt="Tile"

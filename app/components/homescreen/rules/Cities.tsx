@@ -10,7 +10,7 @@ export function Cities() {
                     <div className="absolute left-0 bottom-0">
                         <Image 
                             className="select-none rounded-sm rotate-90"
-                            src={"/cities/Adobe Scan 12 Sept 2023 (59)-1.png"}
+                            src={"/cities/Adobe Scan 12 Sept 2023 (59)-1.jpg"}
                             width={80}
                             height={80}
                             alt="Tile"
@@ -20,7 +20,7 @@ export function Cities() {
                     <div className="absolute top-0 right-0">
                         <Image 
                             className="select-none rounded-sm -rotate-90"
-                            src={"/cities/Adobe Scan 12 Sept 2023 (58)-1.png"}
+                            src={"/cities/Adobe Scan 12 Sept 2023 (58)-1.jpg"}
                             width={80}
                             height={80}
                             alt="Tile"
@@ -31,7 +31,7 @@ export function Cities() {
                     <div className="absolute bottom-0 left-20">
                         <Image 
                             className="select-none rounded-sm -rotate-90"
-                            src={"/cities/Adobe Scan 12 Sept 2023 (28)-1.png"}
+                            src={"/cities/Adobe Scan 12 Sept 2023 (28)-1.jpg"}
                             width={80}
                             height={80}
                             alt="Tile"
@@ -41,7 +41,7 @@ export function Cities() {
                     <div className="absolute top-0 right-20">
                         <Image 
                             className="select-none rounded-sm rotate-90"
-                            src={"/cities/Adobe Scan 12 Sept 2023 (28)-1.png"}
+                            src={"/cities/Adobe Scan 12 Sept 2023 (28)-1.jpg"}
                             width={80}
                             height={80}
                             alt="Tile"

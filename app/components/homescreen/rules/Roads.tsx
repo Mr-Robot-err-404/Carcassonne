@@ -10,7 +10,7 @@ export function Roads() {
                     <div className="absolute left-0 bottom-0">
                         <Image 
                             className="select-none rounded-sm"
-                            src={"/roads/Adobe Scan 12 Sept 2023 (52)-1.png"}
+                            src={"/roads/Adobe Scan 12 Sept 2023 (52)-1.jpg"}
                             width={80}
                             height={80}
                             alt="Tile"
@@ -20,7 +20,7 @@ export function Roads() {
                     <div className="absolute left-20 bottom-0">
                         <Image 
                             className="select-none rounded-sm rotate-90"
-                            src={"/roads/Adobe Scan 12 Sept 2023 (34)-1.png"}
+                            src={"/roads/Adobe Scan 12 Sept 2023 (34)-1.jpg"}
                             width={80}
                             height={80}
                             alt="Tile"
@@ -30,7 +30,7 @@ export function Roads() {
                     <div className="absolute right-0 bottom-0">
                         <Image 
                             className="select-none rounded-sm rotate-90"
-                            src={"/roads/Adobe Scan 12 Sept 2023 (33)-1.png"}
+                            src={"/roads/Adobe Scan 12 Sept 2023 (33)-1.jpg"}
                             width={80}
                             height={80}
                             alt="Tile"
@@ -41,7 +41,7 @@ export function Roads() {
                     <div className="absolute right-0 top-0">
                         <Image 
                             className="select-none rounded-sm"
-                            src={"/monastery/Adobe Scan 12 Sept 2023 (49)-1.png"}
+                            src={"/monastery/Adobe Scan 12 Sept 2023 (49)-1.jpg"}
                             width={80}
                             height={80}
                             alt="Tile"

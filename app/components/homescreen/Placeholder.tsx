@@ -50,7 +50,7 @@ export default function Placeholder() {
                         className={`w-20 h-20 rounded-md`}>
                         <img
                             className={`select-none rounded-sm ${rotateStyle}`}
-                            src={"/cities/Adobe Scan 12 Sept 2023 (35)-1.png"}
+                            src={"/cities/Adobe Scan 12 Sept 2023 (35)-1.jpg"}
                             alt="example"
                         />
                     </div>

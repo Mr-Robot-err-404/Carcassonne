@@ -29,7 +29,7 @@ export function ClaimChild() {
                         <div className="absolute bottom-0 right-0 mb-xs">
                             <Image 
                                 className="select-none rounded-sm"
-                                src={"/roads/Adobe Scan 12 Sept 2023 (48)-1.png"}
+                                src={"/roads/Adobe Scan 12 Sept 2023 (48)-1.jpg"}
                                 width={80}
                                 height={80}
                                 alt="Tile"
@@ -45,7 +45,7 @@ export function ClaimChild() {
                                 onClick={handleClick}>
                                 <Image 
                                     className="select-none rounded-sm"
-                                    src={"/cities/Adobe Scan 12 Sept 2023 (35)-1.png"}
+                                    src={"/cities/Adobe Scan 12 Sept 2023 (35)-1.jpg"}
                                     width={80}
                                     height={80}
                                     alt="Tile"
@@ -59,7 +59,7 @@ export function ClaimChild() {
                         <div className="absolute top-0 right-20 mb-xs">
                             <Image 
                                 className="select-none rounded-sm rotate-180"
-                                src={"/cities/Adobe Scan 12 Sept 2023 (58)-1.png"}
+                                src={"/cities/Adobe Scan 12 Sept 2023 (58)-1.jpg"}
                                 width={80}
                                 height={80}
                                 alt="Tile"

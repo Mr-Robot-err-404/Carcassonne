@@ -10,7 +10,7 @@ export function Contested() {
                     <div className="absolute top-20 left-0">
                         <Image 
                             className="select-none rounded-sm"
-                            src={"/monastery/Adobe Scan 12 Sept 2023 (25)-1.png"}
+                            src={"/monastery/Adobe Scan 12 Sept 2023 (25)-1.jpg"}
                             width={80}
                             height={80}
                             alt="Tile"
@@ -20,7 +20,7 @@ export function Contested() {
                     <div className="absolute top-0 left-0">
                         <Image 
                             className="select-none rounded-sm rotate-90"
-                            src={"/cities/Adobe Scan 12 Sept 2023 (58)-1.png"}
+                            src={"/cities/Adobe Scan 12 Sept 2023 (58)-1.jpg"}
                             width={80}
                             height={80}
                             alt="Tile"
@@ -30,7 +30,7 @@ export function Contested() {
                     <div className="absolute top-0 right-0">
                         <Image 
                             className="select-none rounded-sm rotate-180"
-                            src={"/cities/Adobe Scan 12 Sept 2023 (28)-1.png"}
+                            src={"/cities/Adobe Scan 12 Sept 2023 (28)-1.jpg"}
                             width={80}
                             height={80}
                             alt="Tile"
@@ -41,7 +41,7 @@ export function Contested() {
                     <div className="absolute bottom-0 right-0">
                         <Image 
                             className="select-none rounded-sm -rotate-90"
-                            src={"/cities/Adobe Scan 12 Sept 2023 (28)-1.png"}
+                            src={"/cities/Adobe Scan 12 Sept 2023 (28)-1.jpg"}
                             width={80}
                             height={80}
                             alt="Tile"
@@ -52,7 +52,7 @@ export function Contested() {
                     <div className="absolute bottom-0 left-0">
                         <Image 
                             className="select-none rounded-sm rotate-90"
-                            src={"/cities/Adobe Scan 12 Sept 2023 (28)-1.png"}
+                            src={"/cities/Adobe Scan 12 Sept 2023 (28)-1.jpg"}
                             width={80}
                             height={80}
                             alt="Tile"
@@ -64,7 +64,7 @@ export function Contested() {
                     <div className="absolute top-20 left-0">
                         <Image 
                             className="select-none rounded-sm"
-                            src={"/monastery/Adobe Scan 12 Sept 2023 (25)-1.png"}
+                            src={"/monastery/Adobe Scan 12 Sept 2023 (25)-1.jpg"}
                             width={80}
                             height={80}
                             alt="Tile"
@@ -74,7 +74,7 @@ export function Contested() {
                     <div className="absolute top-0 left-0">
                         <Image 
                             className="select-none rounded-sm rotate-90"
-                            src={"/cities/Adobe Scan 12 Sept 2023 (58)-1.png"}
+                            src={"/cities/Adobe Scan 12 Sept 2023 (58)-1.jpg"}
                             width={80}
                             height={80}
                             alt="Tile"
@@ -84,7 +84,7 @@ export function Contested() {
                     <div className="absolute top-0 right-0">
                         <Image 
                             className="select-none rounded-sm rotate-180"
-                            src={"/cities/Adobe Scan 12 Sept 2023 (28)-1.png"}
+                            src={"/cities/Adobe Scan 12 Sept 2023 (28)-1.jpg"}
                             width={80}
                             height={80}
                             alt="Tile"
@@ -95,7 +95,7 @@ export function Contested() {
                     <div className="absolute bottom-0 right-0">
                         <Image 
                             className="select-none rounded-sm -rotate-90"
-                            src={"/cities/Adobe Scan 12 Sept 2023 (28)-1.png"}
+                            src={"/cities/Adobe Scan 12 Sept 2023 (28)-1.jpg"}
                             width={80}
                             height={80}
                             alt="Tile"
@@ -106,7 +106,7 @@ export function Contested() {
                     <div className="absolute bottom-0 left-0">
                         <Image 
                             className="select-none rounded-sm rotate-90"
-                            src={"/cities/Adobe Scan 12 Sept 2023 (28)-1.png"}
+                            src={"/cities/Adobe Scan 12 Sept 2023 (28)-1.jpg"}
                             width={80}
                             height={80}
                             alt="Tile"
@@ -116,7 +116,7 @@ export function Contested() {
                     <div className="absolute top-20 right-0">
                         <Image 
                             className="select-none rounded-sm rotate-90"
-                            src={"/cities/Adobe Scan 12 Sept 2023 (24)-1.png"}
+                            src={"/cities/Adobe Scan 12 Sept 2023 (24)-1.jpg"}
                             width={80}
                             height={80}
                             alt="Tile"

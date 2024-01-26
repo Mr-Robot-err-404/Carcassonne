@@ -9,7 +9,7 @@ export function Intro() {
                     <div className="h-20">
                         <Image 
                             className="select-none rounded-sm"
-                            src={"/cities/Adobe Scan 12 Sept 2023 (28)-1.png"}
+                            src={"/cities/Adobe Scan 12 Sept 2023 (28)-1.jpg"}
                             width={80}
                             height={80}
                             alt="Tile"
@@ -22,7 +22,7 @@ export function Intro() {
                     <div className="h-20">
                         <Image 
                             className="select-none rounded-sm"
-                            src={"/roads/Adobe Scan 12 Sept 2023 (18)-1.png"}
+                            src={"/roads/Adobe Scan 12 Sept 2023 (18)-1.jpg"}
                             width={80}
                             height={80}
                             alt="Tile"
@@ -35,7 +35,7 @@ export function Intro() {
                     <div className="h-20">
                         <Image 
                             className="select-none rounded-sm"
-                            src={"/monastery/Adobe Scan 12 Sept 2023 (25)-1.png"}
+                            src={"/monastery/Adobe Scan 12 Sept 2023 (25)-1.jpg"}
                             width={80}
                             height={80}
                             alt="Tile"
