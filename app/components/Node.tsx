@@ -39,7 +39,11 @@ export default function Node({ isNodeCenter, row, col, tile, isRecentTile }: Nod
     const isValid = isBadgeValid(currBadge)
 
     const rotateStyle = rotateMap[tile.rotate]
-    
+
+    if (isRecentTile) {
+        console.log(tile)
+    }
+     
     return (
         <div className="relative">
             {isRecentTile && isClaimPossible(claims) && !isNodeClaimed && isClaimReady && toggle &&
@@ -49,7 +53,7 @@ export default function Node({ isNodeCenter, row, col, tile, isRecentTile }: Nod
             onClick={() => setToggle(!toggle)}
             ref={validTiles[`${row}`][`${col}`] ? setNodeRef : null}
             className={`h-full bg-transparent w-20 hover:border hover:border-transparent ${isRecentTile && isClaimPossible(claims) && !isNodeClaimed && isClaimReady && 'border-4 border-yellow-500'} ${isOver ? "border-green-500 border-2" : ""} flex-shrink-0`}>
-            {tile.img && 
+            {tile.img.length > 0 && 
                 <Image
                     className={`select-none ${rotateStyle} rounded-sm`}
                     src={tile.img}

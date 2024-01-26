@@ -14,7 +14,7 @@ export function Scoreboard({ loading }: Props) {
     return (
         <div className="fixed top-7 right-0 z-40">
             <div className="relative">
-                <div className="flex h-44 w-80 flex-col rounded-l-lg bg-slate-800">
+                <div className="flex h-44 w-0 sm:w-80 flex-col rounded-l-lg bg-slate-800">
                     <div className="flex h-10 w-full items-center justify-between border-b border-slate-400">
                         <h2 className="p-1 ml-1 text-xl text-slate-300">Scoreboard</h2>
                         <div className="flex justify-between space-x-2 mr-20">

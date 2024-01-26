@@ -1,6 +1,5 @@
 import { isTerritoryClaimed } from "./claims/isTerritoryClaimed"
-import { Chain, Curr, Land, Neighbor, ChainNode, Tile } from "./interfaces"
-import { emptyTile } from "./nodes"
+import { Curr, Land, Neighbor, ChainNode, Tile, Claim } from "./interfaces"
 
 export function randomIndex(len: number): number {
     const idx = Math.floor(Math.random() * len)
@@ -17,6 +16,13 @@ export function parseKey(key: string): number[] {
 export function capitalizeFirstLetter(str: string) {
     const val = str[0].toUpperCase()
     return val + str.slice(1)
+}
+
+export function placedTile(tile: Tile, recentTile: Tile) {
+    const str = JSON.stringify(tile)
+    const str2 = JSON.stringify(recentTile)
+
+    return str === str2
 }
 
 export function findOtherValue(arr: string[], str: string) {

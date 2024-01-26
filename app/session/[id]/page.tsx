@@ -1,7 +1,7 @@
-import { fetch, fetchGame } from "@/lib/fetch/preset"
-import Home from "../../components/Home"
+import { fetch } from "@/lib/fetch/preset"
 import { parseId } from "@/lib/fetch/parse"
 import { Tile } from "@/lib/interfaces"
+import Main from "@/app/components/Main"
 
 interface Params {
   params: {
@@ -9,7 +9,7 @@ interface Params {
   }
 }
 
-export default async function Main({ params }: Params) {
+export default async function Page({ params }: Params) {
   const { id }  = params
   const [aiIdx, mapIdx, sandbox] = parseId(id)
   
@@ -20,6 +20,6 @@ export default async function Main({ params }: Params) {
   }
 
   return (
-    <Home preset={preset} idx={aiIdx}/>
+    <Main preset={preset} idx={aiIdx}/>
   )
 }

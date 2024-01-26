@@ -6,10 +6,11 @@ import { isCenter } from "@/lib/gridSetup"
 import GridContext from "../context/GridContext"
 import { Tile } from "@/lib/interfaces"
 import Image from "next/image"
+import { placedTile } from "@/lib/helperFunctions"
 
 export default function Grid({ center }: { center: number[]}) {
     const { board, recentTile } = useContext(GridContext)
-
+    
     return (
         <>
             <div className="grid-dimensions relative select-none bg-slate-800">
@@ -31,8 +32,12 @@ export default function Grid({ center }: { center: number[]}) {
                         
                         {board[i].map((tile: Tile, j: number) => {
                             const isNodeCenter = isCenter(i, j, center) 
-                            const isRecentTile = tile === recentTile
+                            let isRecentTile = false
 
+                            if (placedTile(tile, recentTile)) {
+                                isRecentTile = true
+                            }
+                            
                             return <Node row={i} col={j} tile={tile} isNodeCenter={isNodeCenter} isRecentTile={isRecentTile} key={`${i}-${j}`}/>
                         })}
                     </div>) 

@@ -23,7 +23,7 @@ interface Props {
 }
 
 export default function Home({ preset, idx }: Props) {
-  const { isGameFinished, setup} = useContext(GridContext)
+  const { isGameFinished, setup, setCurrTile, stack} = useContext(GridContext)
   const [loading, setLoading] = useState(true)
 
   const [isDragging, setIsDragging] = useState(false);
@@ -34,12 +34,14 @@ export default function Home({ preset, idx }: Props) {
   
   useEffect(() => {
     if (ref.current) { 
-
+      
       const matrix = initValidTiles(preset)
       setup(preset, matrix, idx)
 
       setLoading(false)
       const [x, y] = distanceToCenter([15, 25], window.innerWidth)
+
+      setCurrTile(stack[stack.length - 1])
 
       setCenter({x: x, y: y})
       setCurrentPos({ x: x, y: y })
@@ -115,6 +117,6 @@ function handleDragEnd(e: any) {
     const map = getMap(playerTerritory, playerChains, opponentTerritory, opponentChains)
     const [scores, stats, meeples] = appendClaims(board, filteredClaims, node, map, row, col, overview)
 
-    finishMove(row, col, node, currClaims, map.player.territory, map.ai.territory, map.player.chains, map.ai.chains, scores.player, scores.ai, map, stats, meeples)
+    finishMove(row, col, node, currClaims, map.player.territory, map.ai.territory, map.player.chains, map.ai.chains, scores.player, scores.ai, stats, meeples)
   }
 }

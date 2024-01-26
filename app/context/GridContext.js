@@ -1,5 +1,5 @@
 import { tiles, emptyTile } from "@/lib/nodes";
-import { createEmptyBoard, createEmptyMatrix, createEmptyTerritory, shuffleStack, test } from "@/lib/gridSetup";
+import { createEmptyBoard, createEmptyMatrix, createEmptyTerritory, shuffleStack } from "@/lib/gridSetup";
 import { createContext, useEffect, useState } from "react";
 import { updateValidTiles, initOverview } from "@/lib/inGameFunctions"
 import { selectCities, selectMonasteries, selectRoads } from "@/lib/helperFunctions";
@@ -9,6 +9,7 @@ import { isClaimPossible } from "@/lib/claims/isClaimPossible";
 import { leftoverChains } from "@/lib/completed/leftover";
 import { scorePoints } from "@/lib/completed/score";
 import { aiMoveV2 } from "@/lib/ai/v2/main";
+import { copy } from "@/lib/ai/helper/copy";
 
 const GridContext = createContext()
 
@@ -45,22 +46,11 @@ export function GridProvider({ children }) {
     const [isGameFinished, setIsGameFinished] = useState(false)
     const [overview, setOverview] = useState(initOverview)
 
-    const [map, setMap] = useState({
-        player: {
-            territory: [], 
-            chains: [], 
-        },
-        ai: {
-            territory: [], 
-            chains: [],
-        }
-    })
     const [state, setState] = useState([])
     const [idx, setIdx] = useState(1)
 
     const [aiIdx, setAiIdx] = useState(1)
     const versionMap = [aiMove, aiMoveV2]
-
 
     function setup(preset, matrix, idx) {
         setBoard(preset)
@@ -89,17 +79,6 @@ export function GridProvider({ children }) {
         setPlayerTurn(true)
         setIsClaimReady(false)
         setClaims(new Map())
-
-        setMap({
-            player: {
-                territory: [], 
-                chains: [], 
-            },
-            ai: {
-                territory: [], 
-                chains: [],
-            }
-        })
         
         if (idx === 1) {
             setAiIdx(0)
@@ -108,11 +87,28 @@ export function GridProvider({ children }) {
         setAiIdx(1)
     }
 
-    useEffect(() => {
-        if (stack.length) {
-            setCurrTile(stack[stack.length - 1])
+    const updateCell = (row, col, node, currClaims) => {
+        const matrix = updateValidTiles(board, validTiles, row, col)
+        const newBoard = copy(board)
+        newBoard[row][col] = node
+        
+        updateStack()
+        setBoard(newBoard)
+        setValidTiles(matrix)
+        setClaims(currClaims)
+    }
+
+    const updateStack = () => {
+        if (!stack.length || stack.length === 1) {
+            return 
         }
-    }, [stack])
+        const currStack = copy(stack)
+        currStack.pop()
+
+        const nextTile = currStack[currStack.length - 1]
+        setStack(currStack)
+        setCurrTile(nextTile)
+    }
 
     useEffect(() => {
         if (isClaimReady && meeples.player <= 0) {
@@ -151,7 +147,7 @@ export function GridProvider({ children }) {
             }
 
             const map = move.map
-            finishMove(move.row, move.col, move.node, move.claims, map.player.territory, map.ai.territory, map.player.chains, map.ai.chains, move.scores.player, move.scores.ai, map, move.stats, move.meeples)
+            finishMove(move.row, move.col, move.node, move.claims, map.player.territory, map.ai.territory, map.player.chains, map.ai.chains, move.scores.player, move.scores.ai, move.stats, move.meeples)
 
             if (move.target.acquired) {
                 const curr = [...board]
@@ -176,7 +172,7 @@ export function GridProvider({ children }) {
         }
     }, [playerTurn])
 
-    function finishMove(row, col, node, currClaims, playerMatrix, aiMatrix, playerChains, aiChains, playerScore, aiScore, map, stats, newMeeples) {
+    function finishMove(row, col, node, currClaims, playerMatrix, aiMatrix, playerChains, aiChains, playerScore, aiScore, stats, newMeeples) {
         updateCell(row, col, node, currClaims)
         updateTerritory(playerMatrix, aiMatrix, playerChains, aiChains)
         updateScore(playerScore, aiScore)
@@ -197,23 +193,11 @@ export function GridProvider({ children }) {
                 updateScore(Math.floor(extraScore.player / 2), Math.floor(extraScore.ai / 2))
                 setIsGameFinished(true)
             }
-            setMap(map)
             setPlayerTurn(prevTurn => !prevTurn)
         }
         else if (playerTurn) {
             setIsClaimReady(true)
         }
-    }
-    
-    const updateCell = (row, col, node, currClaims) => {
-        const matrix = updateValidTiles(board, validTiles, row, col)
-        const newBoard = [...board]
-        newBoard[row][col] = node
-        
-        setBoard(newBoard)
-        setValidTiles(matrix)
-        setClaims(currClaims)
-        updateStack()
     }
 
     const appendChain = (chain, matrix, claim) => {
@@ -229,18 +213,6 @@ export function GridProvider({ children }) {
                 ...prev, 
                 player: prev.player - 1
             }))
-
-            setMap(prev => ({
-                ...prev, 
-                player: {
-                    territory: matrix, 
-                    chains: [...prev.player.chains, {
-                        chain: chain, 
-                        meeples: 1, 
-                        claim: claim
-                    }]
-                }
-            }))
         }
         else {
             setOpponentChains((prev) => [...prev, {
@@ -252,18 +224,6 @@ export function GridProvider({ children }) {
             setMeeples(prev => ({
                 ...prev, 
                 ai: prev.ai - 1
-            }))
-
-            setMap(prev => ({
-                ...prev, 
-                ai: {
-                    territory: matrix, 
-                    chains: [...prev.ai.chains, {
-                        chain: chain, 
-                        meeples: 1, 
-                        claim: claim
-                    }]
-                }
             }))
         }
         if (stack.length <= 1) {
@@ -281,17 +241,6 @@ export function GridProvider({ children }) {
         setOpponentTerritory(aiMatrix)
         setPlayerChains(playerChains)
         setOpponentChains(aiChains)
-
-        setMap({
-            player: {
-                territory: playerMatrix, 
-                chains: playerChains
-            },
-            ai: {
-                territory: aiMatrix, 
-                chains: aiChains
-            },
-        })
     } 
 
     function updateScore(playerScore, aiScore) {
@@ -299,18 +248,6 @@ export function GridProvider({ children }) {
             player: prev.player + playerScore, 
             ai: prev.ai + aiScore
         }))
-    }
-
-    const updateStack = () => {
-        if (!stack.length || stack.length === 1) {
-            return 
-        }
-        const currStack = [...stack]
-        currStack.pop()
-
-        const nextTile = currStack[currStack.length - 1]
-        setStack(currStack)
-        setCurrTile(nextTile)
     }
     
     const rotateClockwise = () => {
