@@ -23,7 +23,7 @@ interface Props {
 }
 
 export default function Home({ preset, idx }: Props) {
-  const { isGameFinished, setup, setCurrTile, stack} = useContext(GridContext)
+  const { isGameFinished, setup} = useContext(GridContext)
   const [loading, setLoading] = useState(true)
 
   const [isDragging, setIsDragging] = useState(false);
@@ -40,8 +40,6 @@ export default function Home({ preset, idx }: Props) {
 
       setLoading(false)
       const [x, y] = distanceToCenter([15, 25], window.innerWidth)
-
-      setCurrTile(stack[stack.length - 1])
 
       setCenter({x: x, y: y})
       setCurrentPos({ x: x, y: y })

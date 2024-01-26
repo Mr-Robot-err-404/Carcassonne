@@ -54,6 +54,7 @@ export function GridProvider({ children }) {
 
     useEffect(() => {
         if (stack.length === 56) {
+            setCurrTile(stack[stack.length - 1])
             preloadImages(stack)
         }
     }, [stack])

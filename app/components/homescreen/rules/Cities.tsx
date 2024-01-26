@@ -4,7 +4,7 @@ import Badge from "../../badges/Badge"
 export function Cities() {
     return (
         <>
-            <p>A city is complete when it is fully surrounded by walls. As with roads, a city placed that is connected to an opponent's city cannot directly be claimed. </p>
+            <p>A city is complete when it is fully surrounded by walls. Each tile is worth 2 points, and an extra 2 points if it has a coat of arms. This completed city scores 8 points. </p>
             <div className="flex w-full justify-center">
                 <div className="h-40 w-60 bg-light-brown relative">
                     <div className="absolute left-0 bottom-0">
@@ -50,7 +50,7 @@ export function Cities() {
                     </div>
                 </div>
             </div>
-            <p>When a city is complete, each tile is worth 2 points, while sometimes having a shield which is worth an extra 2 points. This city scores 8 points.</p>
+            <p>After a city tile is placed, a claim cannot be made if it already connects to another claimed city. The same rule applies to roads.</p>
         </>
     )
 }
