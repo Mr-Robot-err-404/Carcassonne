@@ -5,7 +5,7 @@ export function Dragging() {
     return (
       <>
         <DndContext>
-          <p>During their move, players will draw a single tile from the stack of 84 tiles. In the game, you can drag this tile onto the board from the component below:</p>
+          <p>During their move, players will draw a single tile from the stack of 60 tiles. In the game, you can drag this tile onto the board from the component below:</p>
             <div className="ml-20">
               <Placeholder/>  
             </div>
