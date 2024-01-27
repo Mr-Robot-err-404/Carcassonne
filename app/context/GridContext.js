@@ -53,7 +53,7 @@ export function GridProvider({ children }) {
     const versionMap = [aiMove, aiMoveV2]
 
     useEffect(() => {
-        if (stack.length === 56) {
+        if (stack.length === 62) {
             setCurrTile(stack[stack.length - 1])
             preloadImages(stack)
         }

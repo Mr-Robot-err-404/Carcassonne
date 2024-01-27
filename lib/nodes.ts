@@ -477,6 +477,43 @@ export const tiles = [
         id: 70, 
         deadEnd: true
     },
+    {
+        img: "/cities/Adobe Scan 16 Jan 2024-1.jpg", 
+        edges: ["city", "city", "road", "city"], 
+        rotate: 0, 
+        id: 71, 
+        deadEnd: true
+    },
+    {
+        img: "/cities/Adobe Scan 12 Sept 2023 (24)-1.jpg", 
+        edges: ["field", "city", "field", "city"], 
+        rotate: 0, 
+        id: 72
+    },
+    {
+        img: "/cities/Adobe Scan 12 Sept 2023 (24)-1.jpg", 
+        edges: ["field", "city", "field", "city"], 
+        rotate: 0, 
+        id: 73
+    },
+    {
+        img: "/cities/Adobe Scan 12 Sept 2023 (29)-1.jpg", 
+        edges: ["city", "city", "field", "field"], 
+        rotate: 0, 
+        id: 74
+    },
+    {
+        img: "/cities/Adobe Scan 12 Sept 2023 (29)-1.jpg", 
+        edges: ["city", "city", "field", "field"], 
+        rotate: 0, 
+        id: 75
+    },
+    {
+        img: "/cities/Adobe Scan 12 Sept 2023 (47)-1.jpg", 
+        edges: ["city", "city", "field", "city"], 
+        rotate: 0, 
+        id: 76, 
+    },
 ]
 
 export const rotateMap: any = {
